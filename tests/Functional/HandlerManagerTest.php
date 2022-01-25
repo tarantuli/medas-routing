@@ -27,4 +27,10 @@ class HandlerManagerTest extends TestCase
         $handler = service(HandlerManager::class)->find('get', '/projects/name');
         self::assertNull($handler);
     }
+
+    public function testFindHighestPriority(): void
+    {
+        $handler = service(HandlerManager::class)->find('get', '/priority-entrypoint');
+        self::assertEquals(10, $handler->priority());
+    }
 }

@@ -13,7 +13,8 @@ class Handler
     public function __construct(
         private Route    $route,
         private Method   $method,
-        private \Closure $handler
+        private \Closure $handler,
+        private int      $priority,
     )
     {
         $this->pattern = $this->compilePattern();
@@ -30,13 +31,18 @@ class Handler
         return '/^' . $pattern . '$/';
     }
 
-    public function handle(): void
+    public function handle(): mixed
     {
-        $this->handler->__invoke();
+        return $this->handler->__invoke();
     }
 
     public function handles(string $method, string $path): bool
     {
         return $this->method->name() === $method && preg_match($this->pattern, $path);
+    }
+
+    public function priority(): int
+    {
+        return $this->priority;
     }
 }

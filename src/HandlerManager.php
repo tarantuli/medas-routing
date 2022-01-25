@@ -19,13 +19,21 @@ class HandlerManager
 
     public function find(string $method, string $path): Handler|null
     {
+        $handlers = [];
+
         foreach ($this->get() as $handler) {
             if ($handler->handles($method, $path)) {
-                return $handler;
+                $handlers[] = $handler;
             }
         }
 
-        return null;
+        if ($handlers === []) {
+            return null;
+        }
+
+        // Sort by priority, then return the handler with the highest value
+        usort($handlers, fn(Handler $a, Handler $b) => $a->priority() <=> $b->priority());
+        return $handlers[count($handlers) - 1];
     }
 
     /** @return Handler[] */
