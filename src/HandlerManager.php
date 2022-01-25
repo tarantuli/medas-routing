@@ -17,6 +17,15 @@ class HandlerManager
     {
     }
 
+    public function findAndExecute(string $method, string $path): mixed
+    {
+        if (!$handler = $this->find($method, $path)) {
+            return null;
+        }
+
+        return $handler->handle($path);
+    }
+
     public function find(string $method, string $path): Handler|null
     {
         $handlers = [];

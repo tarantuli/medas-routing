@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Routing\Methods\Method;
+use Medas\Routing\Parameters\Parameter;
 
 class Handler
 {
     private string $pattern;
+    /** @var Parameter[] */
+    private array $parameters;
 
     public function __construct(
         private Route    $route,
@@ -17,6 +20,7 @@ class Handler
         private int      $priority,
     )
     {
+        $this->parameters = array_merge($this->route->parameters(), $this->method->parameters());
         $this->pattern = $this->compilePattern();
     }
 
@@ -24,16 +28,26 @@ class Handler
     {
         $pattern = '';
 
-        foreach (array_merge($this->route->parameters(), $this->method->parameters()) as $parameter) {
+        foreach ($this->parameters as $parameter) {
             $pattern .= '\/' . $parameter->pattern();
         }
 
         return '/^' . $pattern . '$/';
     }
 
-    public function handle(): mixed
+    public function handle(string $path): mixed
     {
-        return $this->handler->__invoke();
+        preg_match($this->pattern, $path, $match);
+
+        $arguments = [];
+
+        foreach ($this->parameters as $parameter) {
+            if ($parameter->name()) {
+                $arguments[] = $match[$parameter->name()];
+            }
+        }
+
+        return $this->handler->__invoke(...$arguments);
     }
 
     public function handles(string $method, string $path): bool

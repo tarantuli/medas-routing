@@ -9,4 +9,6 @@ interface Parameter
     public function pattern(): string;
 
     public function isValid(mixed $value): bool;
+
+    public function name(): ?string;
 }

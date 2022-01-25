@@ -19,4 +19,9 @@ class Constant implements Parameter
     {
         return $value == $this->name;
     }
+
+    public function name(): ?string
+    {
+        return null;
+    }
 }
