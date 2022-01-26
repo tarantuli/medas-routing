@@ -38,6 +38,7 @@ class ListCommand extends BaseConsoleCommand
 
     public function process(array $arguments)
     {
+        $this->printer->printLine();
         $table = new Printer\Table(['method', 'endpoint', 'handler']);
 
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
