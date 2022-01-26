@@ -28,26 +28,56 @@ class HandlerManager
 
     public function find(string $method, string $path): Handler|null
     {
-        $handlers = [];
-
-        foreach ($this->get() as $handler) {
+        foreach ($this->getAll() as $handler) {
             if ($handler->handles($method, $path)) {
-                $handlers[] = $handler;
+                return $handler;
             }
         }
 
-        if ($handlers === []) {
-            return null;
-        }
-
-        // Sort by priority, then return the handler with the highest value
-        usort($handlers, fn(Handler $a, Handler $b) => $a->priority() <=> $b->priority());
-        return $handlers[count($handlers) - 1];
+        return null;
     }
 
     /** @return Handler[] */
-    public function get(): array
+    public function getAll(): array
     {
-        return $this->cache->get('handlers', fn() => $this->handlerFinder->find());
+        return $this->cache->get('all-handlers', fn() => $this->handlerFinder->find());
+    }
+
+    public function getActualHandlers(): array
+    {
+        return $this->cache->get('actual-handlers', fn() => $this->findActualHandlers());
+    }
+
+    private function findActualHandlers(): array
+    {
+        $handlers = [];
+
+        foreach ($this->collectHandlersPerEndpoint() as $handlersForEndpoint) {
+            $handlers[] = $this->selectByPriority($handlersForEndpoint);
+        }
+
+        return $handlers;
+    }
+
+    private function collectHandlersPerEndpoint(): array
+    {
+        $handlersPerEndpoint = [];
+
+        foreach ($this->getAll() as $handler) {
+            $endpoint = $handler->method()->name() . ':' . $handler->endpoint();
+            $handlersPerEndpoint[$endpoint][] = $handler;
+        }
+
+        return $handlersPerEndpoint;
+    }
+
+    private function selectByPriority(array $handlers): Handler
+    {
+        // Sort by priority, then select the handler with the highest value as the actual handler
+        usort($handlers, fn(Handler $a, Handler $b) => $a->priority() <=> $b->priority());
+        $handler = array_pop($handlers);
+        $handler->setOverruledHandlers($handlers);
+
+        return $handler;
     }
 }

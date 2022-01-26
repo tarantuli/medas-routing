@@ -12,11 +12,12 @@ class Handler
     private string $pattern;
     /** @var Parameter[] */
     private array $parameters;
+    private array $overruledHandlers;
 
     public function __construct(
         private Route    $route,
         private Method   $method,
-        private string $handlerName,
+        private string   $handlerName,
         private \Closure $handler,
         private int      $priority,
     )
@@ -67,6 +68,16 @@ class Handler
         return $this->priority;
     }
 
+    public function overruledHandlers(): array
+    {
+        return $this->overruledHandlers;
+    }
+
+    public function setOverruledHandlers(array $overruledHandlers): void
+    {
+        $this->overruledHandlers = $overruledHandlers;
+    }
+
     public function route(): Route
     {
         return $this->route;
@@ -97,5 +108,4 @@ class Handler
     {
         return $this->handlerName;
     }
-
 }

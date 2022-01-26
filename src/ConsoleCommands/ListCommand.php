@@ -40,7 +40,7 @@ class ListCommand extends BaseConsoleCommand
     {
         $table = new Printer\Table(['method', 'endpoint', 'handler']);
 
-        foreach ($this->handlerManager->get() as $handler) {
+        foreach ($this->handlerManager->getActualHandlers() as $handler) {
             $table->addData([
                 $handler->method()->name(),
                 $handler->endpoint(),
