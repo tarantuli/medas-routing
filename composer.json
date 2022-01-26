@@ -13,6 +13,7 @@
     "require": {
         "morphp/medas-service-manager": "dev-dev",
         "morphp/medas-config-manager": "dev-dev",
+        "morphp/medas-console": "dev-dev",
         "symfony/cache": "^6.0"
     },
     "require-dev": {

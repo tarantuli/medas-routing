@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Medas\Console\ConsolePackage;
 use Medas\RoutingTest\MockUps\MockUpPackage;
 use Symfony\Component\Cache\Adapter\ApcuAdapter;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -12,4 +13,7 @@ $cache = new ApcuAdapter('entity-manager');
 $cache->clear();
 sm()->bindService($cache, CacheInterface::class);
 
-sm()->addPackage(MockUpPackage::instance());
+sm()->addPackages([
+    MockUpPackage::instance(),
+    ConsolePackage::instance(),
+]);

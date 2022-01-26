@@ -9,6 +9,6 @@ class Get extends BaseMethod
 {
     public function name(): string
     {
-        return 'get';
+        return 'GET';
     }
 }

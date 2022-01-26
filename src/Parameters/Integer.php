@@ -11,6 +11,11 @@ class Integer extends BaseParameter
         return sprintf('(?<%s>\d+)', $this->name);
     }
 
+    public function readablePattern(): string
+    {
+        return ':' . $this->name;
+    }
+
     public function isValid(mixed $value): bool
     {
         return is_int($value);

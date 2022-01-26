@@ -16,6 +16,7 @@ class Handler
     public function __construct(
         private Route    $route,
         private Method   $method,
+        private string $handlerName,
         private \Closure $handler,
         private int      $priority,
     )
@@ -46,8 +47,14 @@ class Handler
                 $arguments[] = $match[$parameter->name()];
             }
         }
+        $handler = $this->handler;
 
-        return $this->handler->__invoke(...$arguments);
+        return $handler(...$arguments);
+    }
+
+    public function handler(): \Closure
+    {
+        return $this->handler;
     }
 
     public function handles(string $method, string $path): bool
@@ -59,4 +66,36 @@ class Handler
     {
         return $this->priority;
     }
+
+    public function route(): Route
+    {
+        return $this->route;
+    }
+
+    public function method(): Method
+    {
+        return $this->method;
+    }
+
+    public function endpoint(): string
+    {
+        $parameters = [];
+
+        foreach ($this->parameters as $parameter) {
+            $parameters[] = $parameter->readablePattern();
+        }
+
+        return '/' . implode('/', $parameters);
+    }
+
+    public function parameters(): array
+    {
+        return $this->parameters;
+    }
+
+    public function handlerName(): string
+    {
+        return $this->handlerName;
+    }
+
 }

@@ -11,34 +11,56 @@ use Medas\ServiceManager\Attributes\Service;
 #[Service]
 class HandlerFinder
 {
+    private array $handlers;
+
     /** @return Handler[] */
     public function find(): array
     {
-        $handlers = [];
+        $this->handlers = [];
 
         foreach (get_declared_classes() as $className) {
-            $class = new \ReflectionClass($className);
-
-            if (!$baseRoute = attribute(Route::class, $class)) {
-                continue;
-            }
-
-            $routePriority = attribute(Priority::class, $class);
-
-            foreach ($class->getMethods() as $method) {
-                if (!$baseMethod = attribute(Method::class, $method)) {
-                    continue;
-                }
-                $methodPriority = attribute(Priority::class, $method);
-
-                $priority = $this->determinePriority($routePriority, $methodPriority);
-
-                $handler = new Handler($baseRoute, $baseMethod, $method->getClosure(service($className)), $priority);
-                $handlers[] = $handler;
-            }
+            $this->processClass($className);
         }
 
-        return $handlers;
+        return $this->handlers;
+    }
+
+    private function processClass(string $className)
+    {
+        $class = new \ReflectionClass($className);
+
+        if (!$baseRoute = attribute(Route::class, $class)) {
+            return;
+        }
+
+        $routePriority = attribute(Priority::class, $class);
+
+        foreach ($class->getMethods() as $method) {
+            $this->processMethod($method, $routePriority, $baseRoute, $className);
+        }
+    }
+
+    private function processMethod(\ReflectionMethod $method, Priority|null $routePriority, Route $baseRoute, string $className): void
+    {
+        if (!$baseMethod = attribute(Method::class, $method)) {
+            return;
+        }
+
+        $methodPriority = attribute(Priority::class, $method);
+
+        $priority = $this->determinePriority($routePriority, $methodPriority);
+
+        $handler = new Handler(
+            $baseRoute,
+            $baseMethod,
+            "$className::$method->name",
+            service($className)->{
+            $method->name
+            }(...),
+            $priority
+        );
+
+        $this->handlers[] = $handler;
     }
 
     private function determinePriority(?Priority $routePriority, ?Priority $methodPriority): int

@@ -8,6 +8,8 @@ interface Parameter
 {
     public function pattern(): string;
 
+    public function readablePattern(): string;
+
     public function isValid(mixed $value): bool;
 
     public function name(): ?string;

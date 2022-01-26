@@ -14,6 +14,8 @@ class HandlerFinderTest extends TestCase
     {
         $routesFinder = service(HandlerFinder::class);
 
-        self::assertInstanceOf(Handler::class, $routesFinder->find()[0]);
+        $routes = $routesFinder->find();
+        self::assertCount(5, $routes);
+        self::assertInstanceOf(Handler::class, $routes[0]);
     }
 }
