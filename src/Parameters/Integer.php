@@ -20,4 +20,9 @@ class Integer extends BaseParameter
     {
         return is_int($value);
     }
+
+    public function normalize(string $value): int
+    {
+        return (int) $value;
+    }
 }

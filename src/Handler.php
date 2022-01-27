@@ -45,7 +45,7 @@ class Handler
 
         foreach ($this->parameters as $parameter) {
             if ($parameter->name()) {
-                $arguments[] = $match[$parameter->name()];
+                $arguments[] = $parameter->normalize($match[$parameter->name()]);
             }
         }
         $handler = $this->handler;

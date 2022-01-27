@@ -13,4 +13,6 @@ interface Parameter
     public function isValid(mixed $value): bool;
 
     public function name(): ?string;
+
+    public function normalize(string $value): mixed;
 }
