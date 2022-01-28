@@ -29,6 +29,10 @@ class HandlerFinder
     {
         $class = new \ReflectionClass($className);
 
+        if ($class->isAbstract()) {
+            return;
+        }
+
         if (!$baseRoute = attribute(Route::class, $class)) {
             return;
         }
