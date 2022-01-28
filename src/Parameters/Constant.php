@@ -28,7 +28,7 @@ class Constant implements Parameter
 
     public function name(): ?string
     {
-        return null;
+        return $this->name;
     }
 
     public function normalize(string $value): string

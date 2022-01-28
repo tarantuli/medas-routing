@@ -43,6 +43,7 @@ class HandlerManager
         return $this->cache->get('all-handlers', fn() => $this->handlerFinder->find());
     }
 
+    /** @return Handler[] */
     public function getActualHandlers(): array
     {
         return $this->cache->get('actual-handlers', fn() => $this->findActualHandlers());

@@ -13,13 +13,13 @@ use Medas\ServiceManager\Attributes\Service;
 #[Service, Route(new Constant('projects'))]
 class ProjectController
 {
-    #[Get]
+    #[Get(forCollectionsOf: Project::class)]
     public function getCollection(): array
     {
         return ['a', 'b'];
     }
 
-    #[Get(new Integer('id'))]
+    #[Get(new Integer('id'), forItemsOf: Project::class)]
     public function getItem(int $id): Project
     {
         return new Project($id);

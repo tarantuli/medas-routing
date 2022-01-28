@@ -12,10 +12,10 @@ abstract class BaseMethod implements Method
     private array $parameters;
 
     public function __construct(
-        Parameter ...$parameters
+        Parameter|array $parameters = []
     )
     {
-        $this->parameters = $parameters;
+        $this->parameters = is_array($parameters) ? $parameters : [$parameters];
     }
 
     public function parameters(): array
