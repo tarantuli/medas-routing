@@ -28,7 +28,7 @@ class HandlerManager
 
     public function find(string $method, string $path): Handler|null
     {
-        foreach ($this->getAll() as $handler) {
+        foreach ($this->getActualHandlers() as $handler) {
             if ($handler->handles($method, $path)) {
                 return $handler;
             }

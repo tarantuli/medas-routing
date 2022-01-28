@@ -20,8 +20,8 @@ class ProjectController
     }
 
     #[Get(new Integer('id'))]
-    public function getItem(int $id): string
+    public function getItem(int $id): Project
     {
-        return (string) $id;
+        return new Project($id);
     }
 }
