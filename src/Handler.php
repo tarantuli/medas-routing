@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Routing\Methods\Method;
+use Medas\Routing\Parameters\Constant;
 use Medas\Routing\Parameters\Parameter;
 
 class Handler
@@ -12,6 +13,7 @@ class Handler
     private string $pattern;
     /** @var Parameter[] */
     private array $parameters;
+    private bool $hasVariables;
     private array $overruledHandlers;
 
     public function __construct(
@@ -22,8 +24,21 @@ class Handler
         private int      $priority,
     )
     {
-        $this->parameters = array_merge($this->route->parameters(), $this->method->parameters());
+        $this->compileParameters();
         $this->pattern = $this->compilePattern();
+    }
+
+    private function compileParameters(): void
+    {
+        $this->parameters = array_merge($this->route->parameters(), $this->method->parameters());
+
+        $this->hasVariables = false;
+        foreach ($this->parameters as $parameter) {
+            if (!$parameter instanceof Constant) {
+                $this->hasVariables = true;
+                break;
+            }
+        }
     }
 
     private function compilePattern(): string
@@ -107,5 +122,10 @@ class Handler
     public function handlerName(): string
     {
         return $this->handlerName;
+    }
+
+    public function hasVariables(): bool
+    {
+        return $this->hasVariables;
     }
 }
