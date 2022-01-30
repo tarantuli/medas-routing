@@ -13,7 +13,8 @@ class Route
     private array $parameters;
 
     public function __construct(
-        Parameter|array $parameters = []
+        Parameter|array     $parameters = [],
+        private string|null $endpointForEntity = null
     )
     {
         $this->parameters = is_array($parameters) ? $parameters : [$parameters];
@@ -22,5 +23,10 @@ class Route
     public function parameters(): array
     {
         return $this->parameters;
+    }
+
+    public function endpointForEntity(): ?string
+    {
+        return $this->endpointForEntity;
     }
 }

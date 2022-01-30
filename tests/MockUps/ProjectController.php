@@ -10,16 +10,16 @@ use Medas\Routing\Parameters\Integer;
 use Medas\Routing\Route;
 use Medas\ServiceManager\Attributes\Service;
 
-#[Service, Route(new Constant('projects'))]
+#[Service, Route(new Constant('projects'), Project::class)]
 class ProjectController
 {
-    #[Get(forCollectionsOf: Project::class)]
+    #[Get(isCollectionEndpoint: true)]
     public function getCollection(): array
     {
         return ['a', 'b'];
     }
 
-    #[Get(new Integer('id'), forItemsOf: Project::class)]
+    #[Get(new Integer('id'), isItemEndpoint: true)]
     public function getItem(int $id): Project
     {
         return new Project($id);

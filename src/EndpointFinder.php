@@ -21,8 +21,11 @@ class EndpointFinder
     public function forItem(object $instance): string|null
     {
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
-            $method = $handler->method();
-            if (!($method instanceof Get) || $method->forItemsOf() !== $instance::class) {
+            if ($handler->route()->endpointForEntity() !== $instance::class) {
+                continue;
+            }
+
+            if (!$handler->method() instanceof Get || !$handler->method()->isItemEndpoint()) {
                 continue;
             }
 
@@ -46,8 +49,11 @@ class EndpointFinder
     public function forCollection(string $class): string|null
     {
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
-            $method = $handler->method();
-            if (!($method instanceof Get) || $method->forCollectionsOf() !== $class) {
+            if ($handler->route()->endpointForEntity() !== $class) {
+                continue;
+            }
+
+            if (!$handler->method() instanceof Get || !$handler->method()->isCollectionEndpoint()) {
                 continue;
             }
 

@@ -10,9 +10,9 @@ use Medas\Routing\Parameters\Parameter;
 class Get extends BaseMethod
 {
     public function __construct(
-        Parameter|array     $parameters = [],
-        private string|null $forCollectionsOf = null,
-        private string|null $forItemsOf = null,
+        Parameter|array $parameters = [],
+        private bool    $isCollectionEndpoint = false,
+        private bool    $isItemEndpoint = false,
     )
     {
         parent::__construct($parameters);
@@ -23,13 +23,13 @@ class Get extends BaseMethod
         return 'GET';
     }
 
-    public function forCollectionsOf(): ?string
+    public function isCollectionEndpoint(): bool
     {
-        return $this->forCollectionsOf;
+        return $this->isCollectionEndpoint;
     }
 
-    public function forItemsOf(): ?string
+    public function isItemEndpoint(): bool
     {
-        return $this->forItemsOf;
+        return $this->isItemEndpoint;
     }
 }
