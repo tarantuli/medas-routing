@@ -18,14 +18,14 @@ class EndpointFinder
     {
     }
 
-    public function forItem(object $instance): string|null
+    public function forEntity(object $instance): string|null
     {
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
             if ($handler->route()->endpointForEntity() !== $instance::class) {
                 continue;
             }
 
-            if (!$handler->method() instanceof Get || !$handler->method()->isItemEndpoint()) {
+            if (!$handler->method() instanceof Get || !$handler->method()->isEntityEndpoint()) {
                 continue;
             }
 

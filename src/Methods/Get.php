@@ -12,7 +12,7 @@ class Get extends BaseMethod
     public function __construct(
         Parameter|array $parameters = [],
         private bool    $isCollectionEndpoint = false,
-        private bool    $isItemEndpoint = false,
+        private bool    $isEntityEndpoint = false,
     )
     {
         parent::__construct($parameters);
@@ -28,8 +28,8 @@ class Get extends BaseMethod
         return $this->isCollectionEndpoint;
     }
 
-    public function isItemEndpoint(): bool
+    public function isEntityEndpoint(): bool
     {
-        return $this->isItemEndpoint;
+        return $this->isEntityEndpoint;
     }
 }

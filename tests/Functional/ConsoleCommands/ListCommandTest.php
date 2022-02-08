@@ -16,6 +16,6 @@ class ListCommandTest extends TestCase
         $output = ob_get_clean();
 
         self::assertStringContainsString('/projects/:id', $output);
-        self::assertStringContainsString('Medas\RoutingTest\MockUps\ProjectController::getItem', $output);
+        self::assertStringContainsString('Medas\RoutingTest\MockUps\ProjectController::getEntity', $output);
     }
 }

@@ -19,8 +19,8 @@ class ProjectController
         return ['a', 'b'];
     }
 
-    #[Get(new Integer('id'), isItemEndpoint: true)]
-    public function getItem(int $id): Project
+    #[Get(new Integer('id'), isEntityEndpoint: true)]
+    public function getEntity(int $id): Project
     {
         return new Project($id);
     }
