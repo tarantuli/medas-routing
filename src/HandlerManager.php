@@ -72,6 +72,7 @@ class HandlerManager
         return $handlersPerEndpoint;
     }
 
+    /** @param Handler[] $handlers */
     private function selectByPriority(array $handlers): Handler
     {
         // Sort by priority, then select the handler with the highest value as the actual handler

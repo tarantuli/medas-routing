@@ -7,6 +7,7 @@ namespace Medas\Routing;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Parameters\Constant;
 use Medas\Routing\Parameters\Parameter;
+use Opis\Closure\SerializableClosure;
 
 class Handler
 {
@@ -50,6 +51,34 @@ class Handler
         }
 
         return '/^' . $pattern . '$/';
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'pattern' => $this->pattern,
+            'parameters' => $this->parameters,
+            'hasVariables' => $this->hasVariables,
+            'overruledHandlers' => $this->overruledHandlers,
+            'route' => $this->route,
+            'method' => $this->method,
+            'handlerName' => $this->handlerName,
+            'handler' => new SerializableClosure($this->handler),
+            'priority' => $this->priority,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->pattern = $data['pattern'];
+        $this->parameters = $data['parameters'];
+        $this->hasVariables = $data['hasVariables'];
+        $this->overruledHandlers = $data['overruledHandlers'];
+        $this->route = $data['route'];
+        $this->method = $data['method'];
+        $this->handlerName = $data['handlerName'];
+        $this->handler = $data['handler']->getClosure();
+        $this->priority = $data['priority'];
     }
 
     public function handle(string $path): mixed
