@@ -57,8 +57,8 @@ class HandlerFinder
         $handler = new Handler(
             $baseRoute,
             $baseMethod,
-            "$className::$method->name",
-            service($className)->{$method->name}(...),
+            $className,
+            $method->name,
             $priority
         );
 

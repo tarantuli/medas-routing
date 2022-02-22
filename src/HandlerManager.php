@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\Cache\Cache;
 use Medas\ServiceManager\Attributes\Service;
-use Symfony\Contracts\Cache\CacheInterface;
 
 #[Service]
 class HandlerManager
 {
     public function __construct(
-        private CacheInterface $cache,
+        private Cache $cache,
         private HandlerFinder  $handlerFinder,
     )
     {
