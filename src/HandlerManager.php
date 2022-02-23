@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
-use Medas\Cache\Cache;
 use Medas\ServiceManager\Attributes\Service;
+use Medas\ServiceManager\Interfaces\Cache;
 
 #[Service]
 class HandlerManager
 {
     public function __construct(
-        private Cache $cache,
-        private HandlerFinder  $handlerFinder,
+        private Cache         $cache,
+        private HandlerFinder $handlerFinder,
     )
     {
     }
@@ -35,12 +35,6 @@ class HandlerManager
         }
 
         return null;
-    }
-
-    /** @return Handler[] */
-    public function getAll(): array
-    {
-        return $this->cache->get('all-handlers', fn() => $this->handlerFinder->find());
     }
 
     /** @return Handler[] */
@@ -70,6 +64,12 @@ class HandlerManager
         }
 
         return $handlersPerEndpoint;
+    }
+
+    /** @return Handler[] */
+    public function getAll(): array
+    {
+        return $this->cache->get('all-handlers', fn() => $this->handlerFinder->find());
     }
 
     /** @param Handler[] $handlers */
