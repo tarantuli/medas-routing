@@ -18,7 +18,7 @@ class HandlerFinder
     {
         $this->handlers = [];
 
-        foreach (get_declared_classes() as $className) {
+        foreach (sm()->getServiceClassNames() as $className) {
             $this->processClass($className);
         }
 
