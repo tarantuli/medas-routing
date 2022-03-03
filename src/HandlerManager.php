@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\ServiceManager\Attributes\Service;
-use Medas\ServiceManager\Interfaces\Cache;
+use Medas\ServiceManager\Cache\CacheManager;
 
 #[Service]
 class HandlerManager
 {
     public function __construct(
-        private Cache         $cache,
+        private CacheManager  $cacheManager,
         private HandlerFinder $handlerFinder,
     )
     {
@@ -40,7 +40,7 @@ class HandlerManager
     /** @return Handler[] */
     public function getActualHandlers(): array
     {
-        return $this->cache->get([$this::class, 'getActualHandlers'], fn() => $this->findActualHandlers());
+        return $this->cacheManager->get()->get([$this::class, 'getActualHandlers'], fn() => $this->findActualHandlers());
     }
 
     private function findActualHandlers(): array
@@ -69,7 +69,7 @@ class HandlerManager
     /** @return Handler[] */
     public function getAll(): array
     {
-        return $this->cache->get([$this::class, 'getAllHandlers'], fn() => $this->handlerFinder->find());
+        return $this->cacheManager->get()->get([$this::class, 'getAllHandlers'], fn() => $this->handlerFinder->find());
     }
 
     /** @param Handler[] $handlers */
