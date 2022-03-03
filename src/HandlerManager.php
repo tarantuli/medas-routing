@@ -6,9 +6,10 @@ namespace Medas\Routing;
 
 use Medas\ServiceManager\Attributes\Service;
 use Medas\ServiceManager\Cache\CacheManager;
+use Medas\ServiceManager\Interfaces\PrimesCache;
 
 #[Service]
-class HandlerManager
+class HandlerManager implements PrimesCache
 {
     public function __construct(
         private CacheManager  $cacheManager,
@@ -81,5 +82,10 @@ class HandlerManager
         $handler->setOverruledHandlers($handlers);
 
         return $handler;
+    }
+
+    public function primeCache(): void
+    {
+        $this->getActualHandlers();
     }
 }
