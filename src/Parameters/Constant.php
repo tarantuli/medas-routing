@@ -6,7 +6,7 @@ namespace Medas\Routing\Parameters;
 
 class Constant implements Parameter
 {
-    public function __construct(private string $name)
+    public function __construct(private readonly string $name)
     {
     }
 

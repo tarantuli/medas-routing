@@ -14,9 +14,9 @@ use Medas\ServiceManager\Attributes\Service;
 class ListCommand extends BaseConsoleCommand
 {
     public function __construct(
-        private HandlerManager $handlerManager,
-        private Printer        $printer,
-        private RoutingGroup   $group,
+        private readonly HandlerManager $handlerManager,
+        private readonly Printer        $printer,
+        private readonly RoutingGroup   $group,
     )
     {
     }

@@ -17,11 +17,11 @@ class Handler
     private array $overruledHandlers;
 
     public function __construct(
-        private Route  $route,
-        private Method $method,
-        private string $handlerClass,
-        private string $handlerMethod,
-        private int    $priority,
+        private readonly Route  $route,
+        private readonly Method $method,
+        private readonly string $handlerClass,
+        private readonly string $handlerMethod,
+        private readonly int    $priority,
     )
     {
         $this->compileParameters();

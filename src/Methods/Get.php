@@ -11,8 +11,8 @@ class Get extends BaseMethod
 {
     public function __construct(
         Parameter|array $parameters = [],
-        private bool    $isCollectionEndpoint = false,
-        private bool    $isEntityEndpoint = false,
+        private         readonly bool    $isCollectionEndpoint = false,
+        private         readonly bool    $isEntityEndpoint = false,
     )
     {
         parent::__construct($parameters);

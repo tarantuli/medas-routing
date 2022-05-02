@@ -25,7 +25,7 @@ class HandlerFinder
         return $this->handlers;
     }
 
-    private function processClass(string $className)
+    private function processClass(string $className): void
     {
         $class = new \ReflectionClass($className);
 

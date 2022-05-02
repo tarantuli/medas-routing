@@ -14,7 +14,7 @@ class Route
 
     public function __construct(
         Parameter|array     $parameters = [],
-        private string|null $endpointForEntity = null
+        private readonly string|null $endpointForEntity = null
     )
     {
         $this->parameters = is_array($parameters) ? $parameters : [$parameters];

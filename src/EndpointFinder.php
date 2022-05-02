@@ -13,7 +13,7 @@ use Medas\ServiceManager\Attributes\Service;
 class EndpointFinder
 {
     public function __construct(
-        private HandlerManager $handlerManager,
+        private readonly HandlerManager $handlerManager,
     )
     {
     }
@@ -25,7 +25,8 @@ class EndpointFinder
                 continue;
             }
 
-            if (!$handler->method() instanceof Get || !$handler->method()->isEntityEndpoint()) {
+            $method = $handler->method();
+            if (!$method instanceof Get || !$method->isEntityEndpoint()) {
                 continue;
             }
 
@@ -53,7 +54,8 @@ class EndpointFinder
                 continue;
             }
 
-            if (!$handler->method() instanceof Get || !$handler->method()->isCollectionEndpoint()) {
+            $method = $handler->method();
+            if (!$method instanceof Get || !$method->isCollectionEndpoint()) {
                 continue;
             }
 

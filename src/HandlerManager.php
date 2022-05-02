@@ -12,8 +12,8 @@ use Medas\ServiceManager\Interfaces\PrimesCache;
 class HandlerManager implements PrimesCache
 {
     public function __construct(
-        private CacheManager  $cacheManager,
-        private HandlerFinder $handlerFinder,
+        private readonly CacheManager  $cacheManager,
+        private readonly HandlerFinder $handlerFinder,
     )
     {
     }
