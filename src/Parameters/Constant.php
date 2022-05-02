@@ -21,7 +21,6 @@ class Constant implements Parameter
     }
 
     public function isValid(mixed $value): bool
-
     {
         return $value == $this->name;
     }
