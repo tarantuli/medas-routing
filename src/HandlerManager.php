@@ -86,6 +86,8 @@ class HandlerManager implements PrimesCache
 
     public function primeCache(): void
     {
+        $this->cacheManager->get()->remove([$this::class, 'getAllHandlers']);
+        $this->cacheManager->get()->remove([$this::class, 'getActualHandlers']);
         $this->getActualHandlers();
     }
 }
