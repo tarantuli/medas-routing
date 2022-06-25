@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Medas\Routing\ConsoleCommands;
 
-use Medas\Console\Commands\BaseConsoleCommand;
-use Medas\Console\Commands\ConsoleCommandGroup;
+use Medas\Console\Commands\{BaseConsoleCommand, ConsoleCommandGroup};
 use Medas\Console\Printer;
 use Medas\Routing\HandlerManager;
+use Medas\ServiceManager\Attributes\Service;
 
-class ReloadCommand extends BaseConsoleCommand
+#[Service]
+class RebuildCommand extends BaseConsoleCommand
 {
     public function __construct(
         private readonly HandlerManager $handlerManager,
