@@ -12,7 +12,7 @@ class Constant implements Parameter
 
     public function pattern(): string
     {
-        return $this->name;
+        return str_replace('/', '\\/', $this->name);
     }
 
     public function readablePattern(): string
