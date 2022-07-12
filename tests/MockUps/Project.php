@@ -7,7 +7,7 @@ namespace Medas\RoutingTest\MockUps;
 class Project
 {
     public function __construct(
-        private int $id
+        private readonly int $id
     )
     {
     }

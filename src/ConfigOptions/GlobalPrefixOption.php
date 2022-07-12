@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Medas\Routing\ConfigOptions;
+
+use Medas\ServiceManager\AsSingleton;
+use Medas\ServiceManager\ConfigOptions\ConfigGroup;
+use Medas\ServiceManager\ConfigOptions\ConfigOption;
+
+class GlobalPrefixOption implements ConfigOption
+{
+    use AsSingleton;
+
+    public function group(): ConfigGroup
+    {
+        return RoutingGroup::instance();
+    }
+
+    public function name(): string
+    {
+        return 'global-prefix';
+    }
+
+    public function description(): string
+    {
+        return 'The global prefix to use for all routes, default to nothing';
+    }
+
+    public function isValid(mixed $value): bool
+    {
+        return $value === null || (is_string($value) && strlen($value) >= 1);
+    }
+
+    public function default(): mixed
+    {
+        return null;
+    }
+}

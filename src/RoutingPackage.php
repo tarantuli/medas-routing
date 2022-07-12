@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\ConfigManager\ConfigManagerPackage;
 use Medas\ServiceManager\AsSingleton;
 use Medas\ServiceManager\BasePackage;
 
@@ -14,6 +15,7 @@ class RoutingPackage extends BasePackage
     public function dependencies(): array
     {
         return $this->dependenciesByClass([
+            ConfigManagerPackage::class,
         ]);
     }
 
