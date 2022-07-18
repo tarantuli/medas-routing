@@ -106,9 +106,13 @@ class Handler
         return $this->method;
     }
 
-    public function endpoint(): string
+    public function endpoint(string|null $globalPrefix): string
     {
         $parameters = [];
+
+        if ($globalPrefix !== null) {
+            $parameters[] = $globalPrefix;
+        }
 
         foreach ($this->parameters as $parameter) {
             $parameters[] = $parameter->readablePattern();

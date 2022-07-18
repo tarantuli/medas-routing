@@ -67,7 +67,7 @@ class HandlerManager implements PrimesCache
         $handlersPerEndpoint = [];
 
         foreach ($this->getAll() as $handler) {
-            $endpoint = $handler->method()->name() . ':' . $handler->endpoint();
+            $endpoint = $handler->method()->name() . ':' . $handler->endpoint($this->globalPrefix);
             $handlersPerEndpoint[$endpoint][] = $handler;
         }
 
