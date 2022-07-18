@@ -104,10 +104,10 @@ class HandlerManager implements PrimesCache
             return $path;
         }
 
-        if (!str_starts_with($path, $this->globalPrefix . '/')) {
+        if (!str_starts_with($path, '/'. $this->globalPrefix . '/')) {
             return null;
         }
 
-        return substr($path, strlen($this->globalPrefix) + 1);
+        return substr($path, strlen($this->globalPrefix) + 2);
     }
 }
