@@ -108,6 +108,6 @@ class HandlerManager implements PrimesCache
             return null;
         }
 
-        return substr($path, strlen($this->globalPrefix) + 2);
+        return substr($path, strlen($this->globalPrefix) + 1    );
     }
 }
