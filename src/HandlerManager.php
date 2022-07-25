@@ -27,6 +27,8 @@ class HandlerManager implements PrimesCache
             return null;
         }
 
+        $path = $this->removeGlobalPrefix($path);
+
         return $handler->handle($path);
     }
 
