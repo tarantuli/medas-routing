@@ -32,6 +32,11 @@ class GlobalPrefixOption implements ConfigOption
         return $value === null || (is_string($value) && strlen($value) >= 1);
     }
 
+    public function hasDefault(): bool
+    {
+        return true;
+    }
+
     public function default(): mixed
     {
         return null;
