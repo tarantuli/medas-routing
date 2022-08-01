@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\ConfigOptions\Attributes\ConfigValue;
 use Medas\Routing\ConfigOptions\GlobalPrefixOption;
-use Medas\ServiceManager\Attributes\ConfigValue;
 use Medas\ServiceManager\Attributes\Service;
 use Medas\ServiceManager\Cache\CacheManager;
 use Medas\ServiceManager\Interfaces\PrimesCache;
@@ -14,9 +14,11 @@ use Medas\ServiceManager\Interfaces\PrimesCache;
 class HandlerManager implements PrimesCache
 {
     public function __construct(
-        private readonly CacheManager                                          $cacheManager,
-        private readonly HandlerFinder                                         $handlerFinder,
-        #[ConfigValue(GlobalPrefixOption::class)] private readonly string|null $globalPrefix,
+        private readonly CacheManager  $cacheManager,
+        private readonly HandlerFinder $handlerFinder,
+
+        #[ConfigValue(GlobalPrefixOption::class)]
+        private readonly string|null   $globalPrefix,
     )
     {
     }
@@ -106,10 +108,10 @@ class HandlerManager implements PrimesCache
             return $path;
         }
 
-        if (!str_starts_with($path, '/'. $this->globalPrefix . '/')) {
+        if (!str_starts_with($path, '/' . $this->globalPrefix . '/')) {
             return null;
         }
 
-        return substr($path, strlen($this->globalPrefix) + 1    );
+        return substr($path, strlen($this->globalPrefix) + 1);
     }
 }

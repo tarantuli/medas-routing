@@ -4,22 +4,24 @@ declare(strict_types=1);
 
 namespace Medas\Routing\ConsoleCommands;
 
+use Medas\ConfigOptions\Attributes\ConfigValue;
 use Medas\Console\Commands\BaseConsoleCommand;
 use Medas\Console\Commands\ConsoleCommandGroup;
 use Medas\Console\Printer;
 use Medas\Routing\ConfigOptions\GlobalPrefixOption;
 use Medas\Routing\HandlerManager;
-use Medas\ServiceManager\Attributes\ConfigValue;
 use Medas\ServiceManager\Attributes\Service;
 
 #[Service]
 class ListCommand extends BaseConsoleCommand
 {
     public function __construct(
-        private readonly HandlerManager                                        $handlerManager,
-        private readonly Printer                                               $printer,
-        private readonly RoutingGroup                                          $group,
-        #[ConfigValue(GlobalPrefixOption::class)] private readonly string|null $globalPrefix,
+        private readonly HandlerManager $handlerManager,
+        private readonly Printer        $printer,
+        private readonly RoutingGroup   $group,
+
+        #[ConfigValue(GlobalPrefixOption::class)]
+        private readonly string|null    $globalPrefix,
     )
     {
     }

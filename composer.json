@@ -13,6 +13,7 @@
     "require": {
         "morphp/medas-service-manager": "dev-dev",
         "morphp/medas-config-manager": "dev-dev",
+        "morphp/medas-config-options": "dev-dev",
         "morphp/medas-console": "dev-dev",
         "morphp/medas-cache": "dev-dev"
     },
