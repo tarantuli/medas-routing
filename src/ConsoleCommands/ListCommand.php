@@ -51,7 +51,7 @@ class ListCommand extends BaseConsoleCommand
                 $handler->method()->name(),
                 $handler->endpoint($this->globalPrefix),
                 $handler->handlerName(),
-                $handler->route()->name(),
+                $handler->method()->routeName(),
             ]);
         }
 

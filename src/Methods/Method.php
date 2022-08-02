@@ -12,4 +12,6 @@ interface Method
 
     /** @return Parameter[] */
     public function parameters(): array;
+
+    public function routeName(): string|null;
 }

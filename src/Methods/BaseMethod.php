@@ -12,7 +12,8 @@ abstract class BaseMethod implements Method
     private array $parameters;
 
     public function __construct(
-        Parameter|array $parameters = []
+        Parameter|array              $parameters = [],
+        private readonly string|null $name = null,
     )
     {
         $this->parameters = is_array($parameters) ? $parameters : [$parameters];
@@ -21,5 +22,10 @@ abstract class BaseMethod implements Method
     public function parameters(): array
     {
         return $this->parameters;
+    }
+
+    public function routeName(): string|null
+    {
+        return $this->name;
     }
 }
