@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
-use Medas\ConfigOptions\Attributes\ConfigValue;
-use Medas\Routing\ConfigOptions\GlobalPrefixOption;
 use Medas\ServiceManager\Attributes\Service;
 use Medas\ServiceManager\Cache\CacheManager;
 use Medas\ServiceManager\Interfaces\PrimesCache;
@@ -16,9 +14,6 @@ class HandlerManager implements PrimesCache
     public function __construct(
         private readonly CacheManager  $cacheManager,
         private readonly HandlerFinder $handlerFinder,
-
-        #[ConfigValue(GlobalPrefixOption::class)]
-        private readonly string|null   $globalPrefix,
     )
     {
     }
@@ -29,17 +24,11 @@ class HandlerManager implements PrimesCache
             return null;
         }
 
-        $path = $this->removeGlobalPrefix($path);
-
         return $handler->handle($path);
     }
 
     public function find(string $method, string $path): Handler|null
     {
-        if (null === $path = $this->removeGlobalPrefix($path)) {
-            return null;
-        }
-
         foreach ($this->getActualHandlers() as $handler) {
             if ($handler->handles($method, $path)) {
                 return $handler;
@@ -111,18 +100,5 @@ class HandlerManager implements PrimesCache
         $this->cacheManager->get()->remove([$this::class, 'getAllHandlers']);
         $this->cacheManager->get()->remove([$this::class, 'getActualHandlers']);
         $this->getActualHandlers();
-    }
-
-    private function removeGlobalPrefix(string $path): string|null
-    {
-        if ($this->globalPrefix === null) {
-            return $path;
-        }
-
-        if (!str_starts_with($path, '/' . $this->globalPrefix . '/')) {
-            return null;
-        }
-
-        return substr($path, strlen($this->globalPrefix) + 1);
     }
 }

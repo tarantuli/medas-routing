@@ -32,9 +32,17 @@ class Handler
 
     private function compileParameters(): void
     {
-        $this->parameters = array_merge($this->route->parameters(), $this->method->parameters());
+        $this->parameters = array_merge(
+            $this->route->parameters(),
+            $this->method->parameters()
+        );
+
+        if ($globalPrefix = option(GlobalPrefixOption::instance())) {
+            array_unshift($this->parameters, new Constant($globalPrefix));
+        }
 
         $this->hasVariables = false;
+
         foreach ($this->parameters as $parameter) {
             if (!$parameter instanceof Constant) {
                 $this->hasVariables = true;
@@ -112,10 +120,6 @@ class Handler
     {
         $parameters = [];
 
-        if (null !== $globalPrefix = option(GlobalPrefixOption::instance())) {
-            $parameters[] = $globalPrefix;
-        }
-
         foreach ($this->parameters as $parameter) {
             $parameters[] = $parameter->readablePattern();
         }
@@ -126,10 +130,6 @@ class Handler
     public function endpoint(array $arguments = []): string
     {
         $parameters = [];
-
-        if (null !== $globalPrefix = option(GlobalPrefixOption::instance())) {
-            $parameters[] = $globalPrefix;
-        }
 
         foreach ($this->parameters as $parameter) {
             if ($parameter instanceof Constant) {
