@@ -7,6 +7,7 @@ namespace Medas\Routing;
 use Medas\Routing\ConfigOptions\GlobalPrefixOption;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Parameters\Constant;
+use Medas\Routing\Parameters\Integer;
 use Medas\Routing\Parameters\Parameter;
 
 class Handler
@@ -131,11 +132,20 @@ class Handler
         }
 
         foreach ($this->parameters as $parameter) {
-            if (!array_key_exists($parameter->name(), $arguments)) {
-                throw new \Exception('missing argument named ' . $parameter->name());
+            if ($parameter instanceof Constant) {
+                $parameters[] = $parameter->readablePattern();
+            }
+            elseif ($parameter instanceof Integer) {
+                if (!array_key_exists($parameter->name(), $arguments)) {
+                    throw new \Exception('missing argument named ' . $parameter->name());
+                }
+
+                $parameters[] = (string) $arguments[$parameter->name()];
+            }
+            else {
+                throw new \Exception('unhandled parameter of type ' . $parameter::class);
             }
 
-            $parameters[] = (string) $arguments[$parameter->name()];
         }
 
         return '/' . implode('/', $parameters);
