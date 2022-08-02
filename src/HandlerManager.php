@@ -49,6 +49,17 @@ class HandlerManager implements PrimesCache
         return null;
     }
 
+    public function findByName(string $name): Handler|null
+    {
+        foreach ($this->getActualHandlers() as $handler) {
+            if ($handler->method()->routeName() === $name) {
+                return $handler;
+            }
+        }
+
+        return null;
+    }
+
     /** @return Handler[] */
     public function getActualHandlers(): array
     {
@@ -71,7 +82,7 @@ class HandlerManager implements PrimesCache
         $handlersPerEndpoint = [];
 
         foreach ($this->getAll() as $handler) {
-            $endpoint = $handler->method()->name() . ':' . $handler->endpoint($this->globalPrefix);
+            $endpoint = $handler->method()->name() . ':' . $handler->endpointPattern();
             $handlersPerEndpoint[$endpoint][] = $handler;
         }
 

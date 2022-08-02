@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\Routing\ConfigOptions\GlobalPrefixOption;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Parameters\Constant;
 use Medas\Routing\Parameters\Parameter;
@@ -106,16 +107,35 @@ class Handler
         return $this->method;
     }
 
-    public function endpoint(string|null $globalPrefix): string
+    public function endpointPattern(): string
     {
         $parameters = [];
 
-        if ($globalPrefix !== null) {
+        if (null !== $globalPrefix = option(GlobalPrefixOption::instance())) {
             $parameters[] = $globalPrefix;
         }
 
         foreach ($this->parameters as $parameter) {
             $parameters[] = $parameter->readablePattern();
+        }
+
+        return '/' . implode('/', $parameters);
+    }
+
+    public function endpoint(array $arguments = []): string
+    {
+        $parameters = [];
+
+        if (null !== $globalPrefix = option(GlobalPrefixOption::instance())) {
+            $parameters[] = $globalPrefix;
+        }
+
+        foreach ($this->parameters as $parameter) {
+            if (!array_key_exists($parameter->name(), $arguments)) {
+                throw new \Exception('missing argument named ' . $parameter->name());
+            }
+
+            $parameters[] = (string) $arguments[$parameter->name()];
         }
 
         return '/' . implode('/', $parameters);

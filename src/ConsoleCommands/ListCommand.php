@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\Routing\ConsoleCommands;
 
-use Medas\ConfigOptions\Attributes\ConfigValue;
 use Medas\Console\Commands\BaseConsoleCommand;
 use Medas\Console\Commands\ConsoleCommandGroup;
 use Medas\Console\Printer;
-use Medas\Routing\ConfigOptions\GlobalPrefixOption;
 use Medas\Routing\HandlerManager;
 use Medas\ServiceManager\Attributes\Service;
 
@@ -19,9 +17,6 @@ class ListCommand extends BaseConsoleCommand
         private readonly HandlerManager $handlerManager,
         private readonly Printer        $printer,
         private readonly RoutingGroup   $group,
-
-        #[ConfigValue(GlobalPrefixOption::class)]
-        private readonly string|null    $globalPrefix,
     )
     {
     }
@@ -49,7 +44,7 @@ class ListCommand extends BaseConsoleCommand
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
             $table->addData([
                 $handler->method()->name(),
-                $handler->endpoint($this->globalPrefix),
+                $handler->endpointPattern(),
                 $handler->handlerName(),
                 $handler->method()->routeName(),
             ]);
