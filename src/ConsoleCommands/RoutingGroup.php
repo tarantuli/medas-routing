@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing\ConsoleCommands;
 
-use Medas\Console\Commands\BaseConsoleCommandGroup;
-use Medas\Console\Commands\ConsoleCommandGroup;
+use Medas\Console\Commands\{BaseConsoleCommandGroup, ConsoleCommandGroup};
 use Medas\ServiceManager\Attributes\Service;
 
 #[Service]

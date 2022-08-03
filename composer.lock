@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7dbe4cca3c57f92ee91fae74273519ea",
+    "content-hash": "09f6b2e3f6a7593b28747eea289c1f86",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -67,48 +67,6 @@
                 }
             ],
             "time": "2022-07-30T15:56:11+00:00"
-        },
-        {
-            "name": "morphp/medas-cache",
-            "version": "dev-dev",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:tarantuli/medas-cache.git",
-                "reference": "15a21ff403670e77ea6d4f0056c26c6f7e39d8cd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-cache/zipball/15a21ff403670e77ea6d4f0056c26c6f7e39d8cd",
-                "reference": "15a21ff403670e77ea6d4f0056c26c6f7e39d8cd",
-                "shasum": ""
-            },
-            "require": {
-                "morphp/medas-file-system": "dev-dev",
-                "morphp/medas-service-manager": "dev-dev"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5"
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Medas\\Cache\\": "src/",
-                    "Medas\\CacheTest\\": "tests/"
-                }
-            },
-            "authors": [
-                {
-                    "name": "Patrick Morpey",
-                    "email": "patrick@morphp.nl"
-                }
-            ],
-            "description": "Medas cache",
-            "support": {
-                "source": "https://github.com/tarantuli/medas-cache/tree/dev",
-                "issues": "https://github.com/tarantuli/medas-cache/issues"
-            },
-            "time": "2022-04-05T14:59:28+00:00"
         },
         {
             "name": "morphp/medas-config-manager",
@@ -3196,10 +3154,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "morphp/medas-service-manager": 20,
-        "morphp/medas-config-manager": 20,
         "morphp/medas-config-options": 20,
-        "morphp/medas-console": 20,
-        "morphp/medas-cache": 20
+        "morphp/medas-console": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
