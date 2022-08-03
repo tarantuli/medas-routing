@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\Routing\Handlers\Handler;
 use Medas\ServiceManager\Attributes\Service;
 use Medas\ServiceManager\Cache\CacheManager;
 use Medas\ServiceManager\Interfaces\PrimesCache;
@@ -24,7 +25,7 @@ class HandlerManager implements PrimesCache
             return null;
         }
 
-        return $handler->handle($path);
+        return $handler->handle($method, $path);
     }
 
     public function find(string $method, string $path): Handler|null
@@ -41,7 +42,7 @@ class HandlerManager implements PrimesCache
     public function findByName(string $name): Handler|null
     {
         foreach ($this->getActualHandlers() as $handler) {
-            if ($handler->method()->routeName() === $name) {
+            if ($handler->routeName() === $name) {
                 return $handler;
             }
         }
@@ -52,7 +53,10 @@ class HandlerManager implements PrimesCache
     /** @return Handler[] */
     public function getActualHandlers(): array
     {
-        return $this->cacheManager->get()->get([$this::class, 'getActualHandlers'], fn() => $this->findActualHandlers());
+        return $this->cacheManager->get()->get(
+            [$this::class, 'getActualHandlers'],
+            fn() => $this->findActualHandlers()
+        );
     }
 
     private function findActualHandlers(): array
@@ -71,7 +75,7 @@ class HandlerManager implements PrimesCache
         $handlersPerEndpoint = [];
 
         foreach ($this->getAll() as $handler) {
-            $endpoint = $handler->method()->name() . ':' . $handler->endpointPattern();
+            $endpoint = $handler->endpointName();
             $handlersPerEndpoint[$endpoint][] = $handler;
         }
 
@@ -81,7 +85,10 @@ class HandlerManager implements PrimesCache
     /** @return Handler[] */
     public function getAll(): array
     {
-        return $this->cacheManager->get()->get([$this::class, 'getAllHandlers'], fn() => $this->handlerFinder->find());
+        return $this->cacheManager->get()->get(
+            [$this::class, 'getAllHandlers'],
+            fn() => $this->handlerFinder->find()
+        );
     }
 
     /** @param Handler[] $handlers */

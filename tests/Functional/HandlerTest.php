@@ -13,6 +13,6 @@ class HandlerTest extends TestCase
     {
         $handler = service(HandlerManager::class)->find('GET', '/projects');
 
-        self::assertEquals(['a', 'b'], $handler->handle('/projects/'));
+        self::assertEquals(['a', 'b'], $handler->handle('GET', '/projects/'));
     }
 }

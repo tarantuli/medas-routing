@@ -7,6 +7,7 @@ namespace Medas\Routing\ConsoleCommands;
 use Medas\Console\Commands\{BaseConsoleCommand, ConsoleCommandGroup};
 use Medas\Console\Printer;
 use Medas\Routing\HandlerManager;
+use Medas\Routing\Handlers\RoutedHandler;
 use Medas\ServiceManager\Attributes\Service;
 
 #[Service]
@@ -41,12 +42,22 @@ class ListCommand extends BaseConsoleCommand
         $table = new Printer\Table(['method', 'endpoint', 'handler', 'name']);
 
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
-            $table->addData([
-                $handler->method()->name(),
-                $handler->endpointPattern(),
-                $handler->handlerName(),
-                $handler->method()->routeName(),
-            ]);
+            if ($handler instanceof RoutedHandler) {
+                $table->addData([
+                    $handler->method()->name(),
+                    $handler->endpointPattern(),
+                    $handler->handlerName(),
+                    $handler->method()->routeName(),
+                ]);
+            }
+            else {
+                $table->addData([
+                    null,
+                    $handler->endpointName(),
+                    $handler::class . '::handle',
+                    null,
+                ]);
+            }
         }
 
         $this->printer->printTable($table);

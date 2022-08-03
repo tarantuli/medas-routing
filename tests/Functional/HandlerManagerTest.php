@@ -13,7 +13,7 @@ class HandlerManagerTest extends TestCase
     public function testFindHandler(): void
     {
         $handler = service(HandlerManager::class)->find('GET', '/projects/1');
-        self::assertInstanceOf(Project::class, $handler->handle('/projects/1'));
+        self::assertInstanceOf(Project::class, $handler->handle('GET','/projects/1'));
     }
 
     public function testDontMatchText(): void
