@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Medas\Routing\Handlers;
 
 use Medas\Routing\ConfigOptions\GlobalPrefixOption;
-use Medas\Routing\Interfaces\Response;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Parameters\{Constant, Integer, Parameter};
 use Medas\Routing\Route;
@@ -62,7 +61,7 @@ class RoutedHandler implements Handler
         return '/^' . $pattern . '$/';
     }
 
-    public function handle(string $method, string $path): Response
+    public function handle(string $method, string $path): mixed
     {
         preg_match($this->pattern, $path, $match);
 
