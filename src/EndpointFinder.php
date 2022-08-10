@@ -72,7 +72,7 @@ class EndpointFinder
 
             foreach ($handler->parameters() as $parameter) {
                 if ($parameter instanceof Constant) {
-                    $endpoint .= '/' . $parameter->pattern();
+                    $endpoint .= '/' . $parameter->readablePattern();
                 }
             }
 
