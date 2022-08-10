@@ -39,7 +39,7 @@ class EndpointFinder
 
             foreach ($handler->parameters() as $parameter) {
                 if ($parameter instanceof Constant) {
-                    $endpoint .= '/' . $parameter->pattern();
+                    $endpoint .= '/' . $parameter->readablePattern();
                 }
                 elseif ($parameter instanceof BaseParameter) {
                     $endpoint .= '/' . (new \ReflectionProperty($instance, $parameter->name()))->getValue($instance);
