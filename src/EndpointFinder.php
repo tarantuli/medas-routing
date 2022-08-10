@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\Routing\Handlers\RoutedHandler;
 use Medas\Routing\Methods\Get;
 use Medas\Routing\Parameters\BaseParameter;
 use Medas\Routing\Parameters\Constant;
@@ -21,6 +22,10 @@ class EndpointFinder
     public function forEntity(object $instance): string|null
     {
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
+            if (!($handler instanceof RoutedHandler)) {
+                continue;
+            }
+
             if ($handler->route()->endpointForEntity() !== $instance::class) {
                 continue;
             }
@@ -50,6 +55,10 @@ class EndpointFinder
     public function forCollection(string $class): string|null
     {
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
+            if (!($handler instanceof RoutedHandler)) {
+                continue;
+            }
+
             if ($handler->route()->endpointForEntity() !== $class) {
                 continue;
             }
