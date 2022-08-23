@@ -11,12 +11,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "morphp/medas-service-manager": "dev-dev",
-        "morphp/medas-config-options": "dev-dev",
-        "morphp/medas-console": "dev-dev"
+        "morphp/medas-service-manager": "dev-dev"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "morphp/medas-console-printer": "dev-dev",
+        "morphp/medas-config-options": "dev-dev",
+        "morphp/medas-config-manager": "dev-dev"
     },
     "autoload": {
         "psr-4": {

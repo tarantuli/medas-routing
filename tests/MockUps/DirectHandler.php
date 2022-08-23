@@ -25,7 +25,7 @@ class DirectHandler implements Handler
         return 'handled directly';
     }
 
-    public function setOverruledHandlers(array $overruledHandlers): void
+    public function setOverruledHandlers(array $handlers): void
     {
         // Do nothing
     }

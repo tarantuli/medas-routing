@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\Routing\ConfigOptions;
 
-use Medas\ConfigOptions\{ConfigGroup, ConfigOption};
 use Medas\ServiceManager\AsSingleton;
+use Medas\ServiceManager\ConfigOptions\{ConfigGroup, ConfigOption};
 
 class GlobalPrefixOption implements ConfigOption
 {
@@ -23,7 +23,7 @@ class GlobalPrefixOption implements ConfigOption
 
     public function description(): string
     {
-        return 'The global prefix to use for all routes, default to nothing';
+        return 'The global prefix to use for all routes, defaults to nothing';
     }
 
     public function isValid(mixed $value): bool

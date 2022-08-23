@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Handlers;
 
-use Medas\Routing\ConfigOptions\GlobalPrefixOption;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Parameters\{Constant, Integer, Parameter};
 use Medas\Routing\Route;
@@ -18,11 +17,12 @@ class RoutedHandler implements Handler
     private array $overruledHandlers;
 
     public function __construct(
-        private readonly Route  $route,
-        private readonly Method $method,
-        private readonly string $handlerClass,
-        private readonly string $handlerMethod,
-        private readonly int    $priority,
+        private readonly string|null $globalPrefix,
+        private readonly Route       $route,
+        private readonly Method      $method,
+        private readonly string      $handlerClass,
+        private readonly string      $handlerMethod,
+        private readonly int         $priority,
     )
     {
         $this->compileParameters();
@@ -36,8 +36,8 @@ class RoutedHandler implements Handler
             $this->method->parameters()
         );
 
-        if ($globalPrefix = option(GlobalPrefixOption::instance())) {
-            array_unshift($this->parameters, new Constant($globalPrefix));
+        if ($this->globalPrefix) {
+            array_unshift($this->parameters, new Constant($this->globalPrefix));
         }
 
         $this->hasVariables = false;
@@ -100,9 +100,9 @@ class RoutedHandler implements Handler
         return $this->overruledHandlers;
     }
 
-    public function setOverruledHandlers(array $overruledHandlers): void
+    public function setOverruledHandlers(array $handlers): void
     {
-        $this->overruledHandlers = $overruledHandlers;
+        $this->overruledHandlers = $handlers;
     }
 
     public function route(): Route

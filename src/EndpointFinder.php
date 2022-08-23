@@ -6,8 +6,7 @@ namespace Medas\Routing;
 
 use Medas\Routing\Handlers\RoutedHandler;
 use Medas\Routing\Methods\Get;
-use Medas\Routing\Parameters\BaseParameter;
-use Medas\Routing\Parameters\Constant;
+use Medas\Routing\Parameters\{BaseParameter, Constant};
 use Medas\ServiceManager\Attributes\Service;
 
 #[Service]

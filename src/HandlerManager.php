@@ -6,8 +6,7 @@ namespace Medas\Routing;
 
 use Medas\Routing\Handlers\Handler;
 use Medas\ServiceManager\Attributes\Service;
-use Medas\ServiceManager\Cache\CacheManager;
-use Medas\ServiceManager\Interfaces\PrimesCache;
+use Medas\ServiceManager\Cache\{CacheManager, Interfaces\PrimesCache};
 
 #[Service]
 class HandlerManager implements PrimesCache

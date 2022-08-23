@@ -6,6 +6,7 @@ namespace Medas\Routing\ConsoleCommands;
 
 use Medas\Console\Commands\{BaseConsoleCommand, ConsoleCommandGroup};
 use Medas\Console\Printer;
+use Medas\Console\Table;
 use Medas\Routing\HandlerManager;
 use Medas\Routing\Handlers\RoutedHandler;
 use Medas\ServiceManager\Attributes\Service;
@@ -36,30 +37,30 @@ class ListCommand extends BaseConsoleCommand
         return 'Prints a list of routes';
     }
 
-    public function process(array $arguments)
+    public function process(array $arguments): void
     {
-        $this->printer->printLine();
-        $table = new Printer\Table(['method', 'endpoint', 'handler', 'name']);
+        $this->printer->print();
+        $table = Table::create(['method', 'endpoint', 'handler', 'name']);
 
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
             if ($handler instanceof RoutedHandler) {
-                $table->addData([
+                $table->data[] = [
                     $handler->method()->name(),
                     $handler->endpointPattern(),
                     $handler->handlerName(),
                     $handler->method()->routeName(),
-                ]);
+                ];
             }
             else {
-                $table->addData([
+                $table->data[] = [
                     null,
                     $handler->endpointName(),
                     $handler::class . '::handle',
                     null,
-                ]);
+                ];
             }
         }
 
-        $this->printer->printTable($table);
+        $this->printer->print($table);
     }
 }

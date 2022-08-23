@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\Routing\ConfigOptions\GlobalPrefixOption;
 use Medas\Routing\Handlers\Handler;
 use Medas\Routing\Handlers\RoutedHandler;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Route\Priority;
 use Medas\ServiceManager\Attributes\Service;
+use Medas\ServiceManager\ConfigOptions\ConfigValue;
 
 #[Service]
 class HandlerFinder
 {
     private array $handlers;
+
+    public function __construct(
+        #[ConfigValue(GlobalPrefixOption::class)]
+        private readonly string|null $globalPrefix,
+    )
+    {
+    }
 
     /** @return RoutedHandler[] */
     public function find(): array
@@ -64,6 +73,7 @@ class HandlerFinder
         $priority = $this->determinePriority($routePriority, $methodPriority);
 
         $handler = new RoutedHandler(
+            $this->globalPrefix,
             $baseRoute,
             $baseMethod,
             $class->name,

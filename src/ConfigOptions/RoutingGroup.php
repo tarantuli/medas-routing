@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\Routing\ConfigOptions;
 
-use Medas\ConfigOptions\{ConfigGroup};
 use Medas\ServiceManager\AsSingleton;
+use Medas\ServiceManager\ConfigOptions\ConfigGroup;
 
 class RoutingGroup implements ConfigGroup
 {
@@ -18,6 +18,6 @@ class RoutingGroup implements ConfigGroup
 
     public function name(): string
     {
-        return 'medas-routing';
+        return 'routing';
     }
 }
