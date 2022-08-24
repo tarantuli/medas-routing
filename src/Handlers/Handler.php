@@ -12,8 +12,6 @@ interface Handler
 
     public function handle(string $method, string $path): mixed;
 
-    public function setOverruledHandlers(array $handlers): void;
-
     public function routeName(): string|null;
 
     public function endpointName(): string;

@@ -25,11 +25,6 @@ class DirectHandler implements Handler
         return 'handled directly';
     }
 
-    public function setOverruledHandlers(array $handlers): void
-    {
-        // Do nothing
-    }
-
     public function routeName(): string|null
     {
         return null;

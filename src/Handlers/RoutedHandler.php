@@ -14,7 +14,6 @@ class RoutedHandler implements Handler
     /** @var Parameter[] */
     private array $parameters;
     private bool $hasVariables;
-    private array $overruledHandlers;
 
     public function __construct(
         private readonly string|null $globalPrefix,
@@ -93,16 +92,6 @@ class RoutedHandler implements Handler
     public function priority(): int
     {
         return $this->priority;
-    }
-
-    public function overruledHandlers(): array
-    {
-        return $this->overruledHandlers;
-    }
-
-    public function setOverruledHandlers(array $handlers): void
-    {
-        $this->overruledHandlers = $handlers;
     }
 
     public function route(): Route

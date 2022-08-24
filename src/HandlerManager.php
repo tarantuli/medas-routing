@@ -95,10 +95,7 @@ class HandlerManager implements PrimesCache
     {
         // Sort by priority, then select the handler with the highest value as the actual handler
         usort($handlers, fn(Handler $a, Handler $b) => $a->priority() <=> $b->priority());
-        $handler = array_pop($handlers);
-        $handler->setOverruledHandlers($handlers);
-
-        return $handler;
+        return array_pop($handlers);
     }
 
     public function primeCache(): void
