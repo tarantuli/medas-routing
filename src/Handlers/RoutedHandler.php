@@ -7,8 +7,9 @@ namespace Medas\Routing\Handlers;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Parameters\{Constant, Integer, Parameter};
 use Medas\Routing\Route;
+use Medas\ServiceManager\RequestHandling\GeneratesEndpoint;
 
-class RoutedHandler implements Handler
+class RoutedHandler implements Handler, GeneratesEndpoint
 {
     private string $pattern;
     /** @var Parameter[] */

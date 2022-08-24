@@ -7,9 +7,10 @@ namespace Medas\Routing;
 use Medas\Routing\Handlers\Handler;
 use Medas\ServiceManager\Attributes\Service;
 use Medas\ServiceManager\Cache\{CacheManager, Interfaces\PrimesCache};
+use Medas\ServiceManager\RequestHandling\RequestHandlerManager;
 
 #[Service]
-class HandlerManager implements PrimesCache
+class HandlerManager implements RequestHandlerManager, PrimesCache
 {
     public function __construct(
         private readonly CacheManager  $cacheManager,
