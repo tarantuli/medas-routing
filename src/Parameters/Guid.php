@@ -6,7 +6,7 @@ namespace Medas\Routing\Parameters;
 
 class Guid extends BaseParameter
 {
-    const REGEX_PATTERN = '(\{)?[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}(?(1)})';
+    const REGEX_PATTERN = '[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?';
 
     public function pattern(): string
     {
