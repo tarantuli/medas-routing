@@ -14,5 +14,5 @@ interface Parameter
 
     public function name(): ?string;
 
-    public function normalize(string $value): mixed;
+    public function denormalize(string $value): mixed;
 }

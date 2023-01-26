@@ -30,7 +30,7 @@ class Constant implements Parameter
         return null;
     }
 
-    public function normalize(string $value): string
+    public function denormalize(string $value): string
     {
         return $value;
     }

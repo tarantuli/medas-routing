@@ -21,7 +21,7 @@ class Integer extends BaseParameter
         return is_int($value);
     }
 
-    public function normalize(string $value): int
+    public function denormalize(string $value): int
     {
         return (int) $value;
     }

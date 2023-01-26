@@ -7,6 +7,7 @@ namespace Medas\Routing\Handlers;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Parameters\{Constant, Integer, Parameter};
 use Medas\Routing\Route;
+use Medas\ServiceManager\ParameterResolving\ParameterResolveManager;
 use Medas\ServiceManager\RequestHandling\GeneratesEndpoint;
 
 class RoutedHandler implements Handler, GeneratesEndpoint
@@ -69,11 +70,13 @@ class RoutedHandler implements Handler, GeneratesEndpoint
 
         foreach ($this->parameters as $parameter) {
             if ($parameter->name()) {
-                $arguments[] = $parameter->normalize($match[$parameter->name()]);
+                $arguments[$parameter->name()] = $parameter->denormalize($match[$parameter->name()]);
             }
         }
 
         $handler = $this->handler();
+        $arguments = service(ParameterResolveManager::class)
+            ->resolveMethod(new \ReflectionFunction($handler), $arguments);
 
         return $handler(...$arguments);
     }
