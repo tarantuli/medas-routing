@@ -7,16 +7,20 @@ use Medas\ConfigOptions\ConfigOptionsPackage;
 use Medas\ConsolePrinter\ConsolePrinterPackage;
 use Medas\Routing\RoutingPackage;
 use Medas\RoutingTest\MockUps\MockUpPackage;
-use Medas\ServiceManager\ServiceManager;
+use Medas\ServiceManager\{ServiceConfig, ServiceManager};
 
-require_once 'vendor/autoload.php';
+chdir(__DIR__);
 
-$sm = ServiceManager::get();
+new ServiceManager(function (): ServiceConfig {
+    $config = new ServiceConfig();
 
-$sm->addPackages([
-    RoutingPackage::instance(),
-    MockUpPackage::instance(),
-    ConsolePrinterPackage::instance(),
-    ConfigOptionsPackage::instance(),
-    ConfigManagerPackage::instance(),
-]);
+    $config->addPackages([
+        RoutingPackage::instance(),
+        MockUpPackage::instance(),
+        ConsolePrinterPackage::instance(),
+        ConfigOptionsPackage::instance(),
+        ConfigManagerPackage::instance(),
+    ]);
+
+    return $config;
+});
