@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\Core\Interfaces\PrimesCache;
 use Medas\Routing\Handlers\Handler;
-use Medas\ServiceManager\Attributes\Service;
-use Medas\ServiceManager\Cache\{CacheManager, Interfaces\PrimesCache};
+use Medas\ServiceManager\Cache\CacheManager;
 use Medas\ServiceManager\RequestHandling\RequestHandlerManager;
+use Medas\ServiceManager\Service;
 
 #[Service]
 class HandlerManager implements RequestHandlerManager, PrimesCache
@@ -32,17 +33,6 @@ class HandlerManager implements RequestHandlerManager, PrimesCache
     {
         foreach ($this->getActualHandlers() as $handler) {
             if ($handler->handles($method, $path)) {
-                return $handler;
-            }
-        }
-
-        return null;
-    }
-
-    public function findByName(string $name): Handler|null
-    {
-        foreach ($this->getActualHandlers() as $handler) {
-            if ($handler->routeName() === $name) {
                 return $handler;
             }
         }
@@ -97,6 +87,17 @@ class HandlerManager implements RequestHandlerManager, PrimesCache
         // Sort by priority, then select the handler with the highest value as the actual handler
         usort($handlers, fn(Handler $a, Handler $b) => $a->priority() <=> $b->priority());
         return array_pop($handlers);
+    }
+
+    public function findByName(string $name): Handler|null
+    {
+        foreach ($this->getActualHandlers() as $handler) {
+            if ($handler->routeName() === $name) {
+                return $handler;
+            }
+        }
+
+        return null;
     }
 
     public function primeCache(): void

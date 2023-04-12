@@ -8,7 +8,7 @@ use Medas\Routing\Methods\Get;
 use Medas\Routing\Parameters\Constant;
 use Medas\Routing\Parameters\Integer;
 use Medas\Routing\Route;
-use Medas\ServiceManager\Attributes\Service;
+use Medas\ServiceManager\Service;
 
 #[Service, Route(new Constant('projects'), Project::class)]
 class ProjectController

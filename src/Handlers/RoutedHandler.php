@@ -147,7 +147,6 @@ class RoutedHandler implements Handler, GeneratesEndpoint
             else {
                 throw new \Exception('unhandled parameter of type ' . $parameter::class);
             }
-
         }
 
         return '/' . implode('/', $parameters);

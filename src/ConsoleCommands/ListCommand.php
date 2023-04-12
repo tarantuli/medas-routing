@@ -9,7 +9,7 @@ use Medas\Console\Printer;
 use Medas\Console\Table;
 use Medas\Routing\HandlerManager;
 use Medas\Routing\Handlers\RoutedHandler;
-use Medas\ServiceManager\Attributes\Service;
+use Medas\ServiceManager\Service;
 
 #[Service]
 class ListCommand extends BaseConsoleCommand
