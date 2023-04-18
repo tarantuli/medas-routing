@@ -7,9 +7,9 @@ namespace Medas\Routing\ConsoleCommands;
 use Medas\Console\Commands\{BaseConsoleCommand, ConsoleCommandGroup};
 use Medas\Console\Printer;
 use Medas\Console\Table;
+use Medas\Core\Attributes\Service;
 use Medas\Routing\HandlerManager;
 use Medas\Routing\Handlers\RoutedHandler;
-use Medas\ServiceManager\Service;
 
 #[Service]
 class ListCommand extends BaseConsoleCommand

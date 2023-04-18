@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\Routing\ConsoleCommands;
 
 use Medas\Console\Commands\{BaseConsoleCommandGroup, ConsoleCommandGroup};
-use Medas\ServiceManager\Service;
+use Medas\Core\Attributes\Service;
 
 #[Service]
 class RoutingGroup extends BaseConsoleCommandGroup

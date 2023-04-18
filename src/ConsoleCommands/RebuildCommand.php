@@ -7,8 +7,8 @@ namespace Medas\Routing\ConsoleCommands;
 use Medas\Console\Commands\{BaseConsoleCommand, ConsoleCommandGroup};
 use Medas\Console\Printer;
 use Medas\Console\Text;
+use Medas\Core\Attributes\Service;
 use Medas\Routing\HandlerManager;
-use Medas\ServiceManager\Service;
 
 #[Service]
 class RebuildCommand extends BaseConsoleCommand

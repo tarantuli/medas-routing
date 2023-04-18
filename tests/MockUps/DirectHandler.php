@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\RoutingTest\MockUps;
 
 use Medas\Routing\Handlers\Handler;
-use Medas\ServiceManager\Service;
+use Medas\Core\Attributes\Service;
 
 #[Service]
 class DirectHandler implements Handler

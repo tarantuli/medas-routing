@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\Core\Attributes\Service;
 use Medas\Routing\Handlers\RoutedHandler;
 use Medas\Routing\Methods\Get;
 use Medas\Routing\Parameters\{BaseParameter, Constant};
-use Medas\ServiceManager\Service;
 
 #[Service]
 class EndpointFinder

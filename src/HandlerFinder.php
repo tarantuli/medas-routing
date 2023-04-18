@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Core\Attributes\ConfigValue;
+use Medas\Core\Attributes\Service;
 use Medas\Routing\ConfigOptions\GlobalPrefixOption;
 use Medas\Routing\Handlers\Handler;
 use Medas\Routing\Handlers\RoutedHandler;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Route\Priority;
-use Medas\ServiceManager\Service;
 
 #[Service]
 class HandlerFinder

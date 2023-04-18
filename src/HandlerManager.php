@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\Core\Attributes\Service;
 use Medas\Core\Interfaces\PrimesCache;
 use Medas\Routing\Handlers\Handler;
 use Medas\ServiceManager\Cache\CacheManager;
 use Medas\ServiceManager\RequestHandling\RequestHandlerManager;
-use Medas\ServiceManager\Service;
 
 #[Service]
 class HandlerManager implements RequestHandlerManager, PrimesCache
