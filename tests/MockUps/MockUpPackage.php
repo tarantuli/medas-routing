@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\RoutingTest\MockUps;
 
-use Medas\ServiceManager\AsSingleton;
+use Medas\Core\AsSingleton;
 use Medas\ServiceManager\BasePackage;
 
 class MockUpPackage extends BasePackage
