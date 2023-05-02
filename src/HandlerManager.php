@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Core\Attributes\Service;
-use Medas\Core\Interfaces\PrimesCache;
+use Medas\Core\Interfaces\{PrimesCache, RoutedRequestHandlerManager};
 use Medas\Routing\Handlers\Handler;
 use Medas\ServiceManager\Cache\CacheManager;
-use Medas\ServiceManager\RequestHandling\RequestHandlerManager;
 
 #[Service]
-class HandlerManager implements RequestHandlerManager, PrimesCache
+class HandlerManager implements RoutedRequestHandlerManager, PrimesCache
 {
     public function __construct(
         private readonly CacheManager  $cacheManager,

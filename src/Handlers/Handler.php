@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Handlers;
 
-use Medas\ServiceManager\RequestHandling\RequestHandler;
+use Medas\Core\Interfaces\RoutedRequestHandler;
 
-interface Handler extends RequestHandler
+interface Handler extends RoutedRequestHandler
 {
     public function priority(): int;
 

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Handlers;
 
+use Medas\Core\Interfaces\RoutedRequestHandlerGeneratesEndpoint;
+use Medas\ObjectInstantiator\ParameterResolving\ParameterResolveManager;
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Parameters\{Constant, Integer, Parameter};
 use Medas\Routing\Route;
-use Medas\ServiceManager\ParameterResolving\ParameterResolveManager;
-use Medas\ServiceManager\RequestHandling\GeneratesEndpoint;
 
-class RoutedHandler implements Handler, GeneratesEndpoint
+class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
 {
     private string $pattern;
     /** @var Parameter[] */
@@ -49,6 +49,11 @@ class RoutedHandler implements Handler, GeneratesEndpoint
                 break;
             }
         }
+    }
+
+    public function parameters(): array
+    {
+        return $this->parameters;
     }
 
     private function compilePattern(): string
@@ -150,11 +155,6 @@ class RoutedHandler implements Handler, GeneratesEndpoint
         }
 
         return '/' . implode('/', $parameters);
-    }
-
-    public function parameters(): array
-    {
-        return $this->parameters;
     }
 
     public function handlerName(): string
