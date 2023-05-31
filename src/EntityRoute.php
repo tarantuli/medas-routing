@@ -16,7 +16,7 @@ class EntityRoute extends Route
     {
         $lastBackslash = strrpos($className, '\\');
         $shortName = $lastBackslash === false ? $className : substr($className, $lastBackslash + 1);
-        $identifier = new Identifier($shortName);
+        $identifier = Identifier::fromCamelCase($shortName);
 
         parent::__construct(new Constant($identifier->toSnakeCase()), endpointForEntity: $className);
     }
