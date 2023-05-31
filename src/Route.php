@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
+use Medas\Core\Attributes\Service;
 use Medas\Routing\Parameters\Parameter;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
-class Route
+class Route extends Service
 {
     /** @var Parameter[] */
     private array $parameters;
