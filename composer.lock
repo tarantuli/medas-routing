@@ -24,7 +24,6 @@
                 "morphp/medas-service-manager": "dev-dev",
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -56,12 +55,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-core.git",
-                "reference": "73c7e114a2f78629af9754f1666b3ef552d7818b"
+                "reference": "d6210b9e208ede482be0de1adace4c263a9b4168"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/73c7e114a2f78629af9754f1666b3ef552d7818b",
-                "reference": "73c7e114a2f78629af9754f1666b3ef552d7818b",
+                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/d6210b9e208ede482be0de1adace4c263a9b4168",
+                "reference": "d6210b9e208ede482be0de1adace4c263a9b4168",
                 "shasum": ""
             },
             "require": {
@@ -71,7 +70,6 @@
                 "morphp/medas-service-manager": "dev-dev",
                 "phpunit/phpunit": "^9"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -95,7 +93,7 @@
                 "source": "https://github.com/tarantuli/medas-core/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-core/issues"
             },
-            "time": "2023-05-23T09:30:52+00:00"
+            "time": "2023-06-06T09:46:58+00:00"
         },
         {
             "name": "morphp/medas-object-instantiator",
@@ -115,7 +113,6 @@
                 "morphp/medas-service-manager": "dev-dev",
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -142,12 +139,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-service-manager.git",
-                "reference": "c49bb4fdf84daa25ce0382355f84c21d7864fe3a"
+                "reference": "fc022eb105d478110098da64955c7e32fe46d74f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-service-manager/zipball/c49bb4fdf84daa25ce0382355f84c21d7864fe3a",
-                "reference": "c49bb4fdf84daa25ce0382355f84c21d7864fe3a",
+                "url": "https://api.github.com/repos/tarantuli/medas-service-manager/zipball/fc022eb105d478110098da64955c7e32fe46d74f",
+                "reference": "fc022eb105d478110098da64955c7e32fe46d74f",
                 "shasum": ""
             },
             "require": {
@@ -158,7 +155,6 @@
             "require-dev": {
                 "phpunit/phpunit": "^9"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -182,7 +178,7 @@
                 "source": "https://github.com/tarantuli/medas-service-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-service-manager/issues"
             },
-            "time": "2023-05-22T10:41:32+00:00"
+            "time": "2023-06-02T09:31:29+00:00"
         }
     ],
     "packages-dev": [
@@ -340,7 +336,6 @@
                 "morphp/medas-service-manager": "dev-dev",
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -367,12 +362,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-config-options.git",
-                "reference": "aa9cf446941cc69c42c2b9a9379679b51a60a7c5"
+                "reference": "c5505639e390796d4ba9c0f6a8aff5eadf0470a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-config-options/zipball/aa9cf446941cc69c42c2b9a9379679b51a60a7c5",
-                "reference": "aa9cf446941cc69c42c2b9a9379679b51a60a7c5",
+                "url": "https://api.github.com/repos/tarantuli/medas-config-options/zipball/c5505639e390796d4ba9c0f6a8aff5eadf0470a7",
+                "reference": "c5505639e390796d4ba9c0f6a8aff5eadf0470a7",
                 "shasum": ""
             },
             "require": {
@@ -380,9 +375,9 @@
             },
             "require-dev": {
                 "morphp/medas-config-manager": "dev-dev",
+                "morphp/medas-console-printer": "dev-dev",
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -401,7 +396,7 @@
                 "source": "https://github.com/tarantuli/medas-config-options/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-config-options/issues"
             },
-            "time": "2023-05-02T07:47:22+00:00"
+            "time": "2023-06-06T13:56:53+00:00"
         },
         {
             "name": "morphp/medas-console-printer",
@@ -409,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-console-printer.git",
-                "reference": "8d4cff5cef78c4eaa38f996fe8bcd002794c0b5b"
+                "reference": "16eb00a2d2d18495f113dc09183d3fd37a60d596"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-console-printer/zipball/8d4cff5cef78c4eaa38f996fe8bcd002794c0b5b",
-                "reference": "8d4cff5cef78c4eaa38f996fe8bcd002794c0b5b",
+                "url": "https://api.github.com/repos/tarantuli/medas-console-printer/zipball/16eb00a2d2d18495f113dc09183d3fd37a60d596",
+                "reference": "16eb00a2d2d18495f113dc09183d3fd37a60d596",
                 "shasum": ""
             },
             "require": {
@@ -425,7 +420,6 @@
                 "morphp/medas-config-options": "dev-dev",
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -444,7 +438,7 @@
                 "source": "https://github.com/tarantuli/medas-console-printer/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-console-printer/issues"
             },
-            "time": "2023-05-24T11:27:00+00:00"
+            "time": "2023-06-06T13:33:08+00:00"
         },
         {
             "name": "myclabs/deep-copy",
