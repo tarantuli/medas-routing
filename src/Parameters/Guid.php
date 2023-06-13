@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Parameters;
 
+use Medas\Core\Interfaces\Guid as GuidType;
 use Medas\Core\Interfaces\GuidProvider;
 
 class Guid extends BaseParameter
@@ -25,7 +26,7 @@ class Guid extends BaseParameter
         return preg_match('/^' . self::REGEX_PATTERN . '$/', $value);
     }
 
-    public function denormalize(string $value): Guid
+    public function denormalize(string $value): GuidType
     {
         return service(GuidProvider::class)->fromString($value);
     }
