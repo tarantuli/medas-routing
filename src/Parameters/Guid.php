@@ -18,7 +18,7 @@ class Guid extends BaseParameter
 
     public function readablePattern(): string
     {
-        return ':' . $this->name . '-guid';
+        return $this->name === 'id' ? ':guid' : ':' . $this->name . '-guid';
     }
 
     public function isValid(mixed $value): bool
