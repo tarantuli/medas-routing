@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Handlers;
 
-use Medas\Core\Interfaces\RoutedRequestHandlerGeneratesEndpoint;
-use Medas\ObjectInstantiator\ParameterResolving\ParameterResolveManager;
+use Medas\Core\Interfaces\{ParameterResolveManager, RoutedRequestHandlerGeneratesEndpoint};
 use Medas\Routing\Methods\Method;
 use Medas\Routing\Parameters\{Constant, Integer, Parameter};
 use Medas\Routing\Route;
