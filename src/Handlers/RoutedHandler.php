@@ -80,7 +80,7 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
 
         $handler = $this->handler();
         $arguments = service(ParameterResolveManager::class)
-            ->resolveMethod(new \ReflectionFunction($handler), $arguments);
+            ->resolveMethodParameters(new \ReflectionFunction($handler), $arguments);
 
         return $handler(...$arguments);
     }
