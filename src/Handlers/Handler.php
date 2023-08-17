@@ -8,10 +8,6 @@ use Medas\Core\Interfaces\RoutedRequestHandler;
 
 interface Handler extends RoutedRequestHandler
 {
-    public function priority(): int;
-
-    public function handles(string $method, string $path): bool;
-
     public function handle(string $method, string $path): mixed;
 
     public function routeName(): string|null;
