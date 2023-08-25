@@ -10,10 +10,10 @@ use Medas\Routing\Methods\Get;
 use Medas\Routing\Parameters\{BaseParameter, Constant};
 
 #[Service]
-class EndpointFinder
+readonly class EndpointFinder
 {
     public function __construct(
-        private readonly HandlerManager $handlerManager,
+        private HandlerManager $handlerManager,
     )
     {
     }

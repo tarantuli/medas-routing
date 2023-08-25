@@ -11,12 +11,12 @@ use Medas\Core\Attributes\Service;
 use Medas\Routing\HandlerManager;
 
 #[Service]
-class RebuildCommand extends BaseConsoleCommand
+readonly class RebuildCommand extends BaseConsoleCommand
 {
     public function __construct(
-        private readonly HandlerManager $handlerManager,
-        private readonly Printer        $printer,
-        private readonly RoutingGroup   $group,
+        private HandlerManager $handlerManager,
+        private Printer        $printer,
+        private RoutingGroup   $group,
     )
     {
     }

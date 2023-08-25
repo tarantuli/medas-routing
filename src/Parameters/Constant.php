@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Parameters;
 
-class Constant implements Parameter
+readonly class Constant implements Parameter
 {
     public function __construct(
-        private readonly string $name,
+        private string $name,
     )
     {
     }

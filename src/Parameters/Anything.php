@@ -21,7 +21,7 @@ class Anything implements Parameter
         return true;
     }
 
-    public function denormalize(string $value): mixed
+    public function denormalize(string $value): null
     {
         return null;
     }

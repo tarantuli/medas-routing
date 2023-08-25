@@ -8,10 +8,10 @@ use Medas\Core\Attributes\Service;
 use Medas\Core\Interfaces\{ConfigGroup, ConfigOption};
 
 #[Service]
-class GlobalPrefixOption implements ConfigOption
+readonly class GlobalPrefixOption implements ConfigOption
 {
     public function __construct(
-        private readonly RoutingGroup $group,
+        private RoutingGroup $group,
     )
     {
     }
@@ -41,7 +41,7 @@ class GlobalPrefixOption implements ConfigOption
         return true;
     }
 
-    public function default(): mixed
+    public function default(): null
     {
         return null;
     }

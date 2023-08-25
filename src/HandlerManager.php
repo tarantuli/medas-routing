@@ -10,11 +10,11 @@ use Medas\Routing\Handlers\Handler;
 use Medas\ServiceManager\Cache\CacheManager;
 
 #[Service]
-class HandlerManager implements RoutedRequestHandlerManager, PrimesCache
+readonly class HandlerManager implements RoutedRequestHandlerManager, PrimesCache
 {
     public function __construct(
-        private readonly CacheManager  $cacheManager,
-        private readonly HandlerFinder $handlerFinder,
+        private CacheManager  $cacheManager,
+        private HandlerFinder $handlerFinder,
     )
     {
     }

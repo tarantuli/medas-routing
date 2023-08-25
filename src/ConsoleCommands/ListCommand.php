@@ -12,12 +12,12 @@ use Medas\Routing\HandlerManager;
 use Medas\Routing\Handlers\RoutedHandler;
 
 #[Service]
-class ListCommand extends BaseConsoleCommand
+readonly class ListCommand extends BaseConsoleCommand
 {
     public function __construct(
-        private readonly HandlerManager $handlerManager,
-        private readonly Printer        $printer,
-        private readonly RoutingGroup   $group,
+        private HandlerManager $handlerManager,
+        private Printer        $printer,
+        private RoutingGroup   $group,
     )
     {
     }
