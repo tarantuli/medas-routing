@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Core\Identifier;
-use Medas\Routing\Parameters\Constant;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class EntityRoute extends Route
@@ -18,6 +17,9 @@ class EntityRoute extends Route
         $shortName = $lastBackslash === false ? $className : substr($className, $lastBackslash + 1);
         $identifier = Identifier::fromCamelCase($shortName);
 
-        parent::__construct(new Constant($identifier->toKebabCase()), endpointForEntity: $className);
+        parent::__construct(
+            new Parameters\Constant($identifier->toKebabCase()),
+            endpointForEntity: $className
+        );
     }
 }

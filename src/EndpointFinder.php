@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Core\Attributes\Service;
-use Medas\Routing\Handlers\RoutedHandler;
-use Medas\Routing\Methods\Get;
-use Medas\Routing\Parameters\{BaseParameter, Constant};
 
 #[Service]
 readonly class EndpointFinder
@@ -21,7 +18,7 @@ readonly class EndpointFinder
     public function forEntity(object $instance): string|null
     {
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
-            if (!($handler instanceof RoutedHandler)) {
+            if (!($handler instanceof Handlers\RoutedHandler)) {
                 continue;
             }
 
@@ -30,18 +27,20 @@ readonly class EndpointFinder
             }
 
             $method = $handler->method();
-            if (!$method instanceof Get || !$method->isEntityEndpoint()) {
+
+            if (!$method instanceof Methods\Get || !$method->isEntityEndpoint()) {
                 continue;
             }
 
             $endpoint = '';
 
             foreach ($handler->parameters() as $parameter) {
-                if ($parameter instanceof Constant) {
+                if ($parameter instanceof Parameters\Constant) {
                     $endpoint .= '/' . $parameter->readablePattern();
                 }
-                elseif ($parameter instanceof BaseParameter) {
-                    $endpoint .= '/' . (new \ReflectionProperty($instance, $parameter->name()))->getValue($instance);
+                elseif ($parameter instanceof Parameters\BaseParameter) {
+                    $endpoint .= '/'
+                        . (new \ReflectionProperty($instance, $parameter->name()))->getValue($instance);
                 }
             }
 
@@ -54,7 +53,7 @@ readonly class EndpointFinder
     public function forCollection(string $class): string|null
     {
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
-            if (!($handler instanceof RoutedHandler)) {
+            if (!($handler instanceof Handlers\RoutedHandler)) {
                 continue;
             }
 
@@ -63,14 +62,15 @@ readonly class EndpointFinder
             }
 
             $method = $handler->method();
-            if (!$method instanceof Get || !$method->isCollectionEndpoint()) {
+
+            if (!$method instanceof Methods\Get || !$method->isCollectionEndpoint()) {
                 continue;
             }
 
             $endpoint = '';
 
             foreach ($handler->parameters() as $parameter) {
-                if ($parameter instanceof Constant) {
+                if ($parameter instanceof Parameters\Constant) {
                     $endpoint .= '/' . $parameter->readablePattern();
                 }
             }

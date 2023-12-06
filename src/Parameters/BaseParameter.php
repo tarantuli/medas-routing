@@ -10,7 +10,7 @@ abstract class BaseParameter implements Parameter
     {
     }
 
-    public function name(): ?string
+    public function name(): string|null
     {
         return $this->name;
     }

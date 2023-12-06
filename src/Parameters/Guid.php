@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Parameters;
 
-use Medas\Core\Interfaces\Guid as GuidType;
-use Medas\Core\Interfaces\GuidProvider;
+use Medas\Core\Interfaces\{Guid as GuidType, GuidProvider};
 
 class Guid extends BaseParameter
 {

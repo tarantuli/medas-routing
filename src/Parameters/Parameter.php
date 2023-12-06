@@ -12,7 +12,7 @@ interface Parameter
 
     public function isValid(mixed $value): bool;
 
-    public function name(): ?string;
+    public function name(): string|null;
 
     public function denormalize(string $value): mixed;
 }

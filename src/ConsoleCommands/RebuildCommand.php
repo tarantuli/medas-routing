@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing\ConsoleCommands;
 
-use Medas\Console\Commands\{BaseConsoleCommand, ConsoleCommandGroup};
-use Medas\Console\Printer;
-use Medas\Console\Text;
+use Medas\Console\{Commands\BaseConsoleCommand, Commands\ConsoleCommandGroup, Printer, Text};
 use Medas\Core\Attributes\Service;
 use Medas\Routing\HandlerManager;
 

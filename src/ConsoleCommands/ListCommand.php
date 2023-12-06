@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Medas\Routing\ConsoleCommands;
 
-use Medas\Console\Commands\{BaseConsoleCommand, ConsoleCommandGroup};
-use Medas\Console\Printer;
-use Medas\Console\Table;
+use Medas\Console\{
+    Commands\BaseConsoleCommand,
+    Commands\ConsoleCommandGroup,
+    Formats\Color,
+    Printer,
+    Table,
+    Text
+};
 use Medas\Core\Attributes\Service;
-use Medas\Routing\HandlerManager;
-use Medas\Routing\Handlers\RoutedHandler;
+use Medas\Routing\{HandlerManager, Handlers\RoutedHandler};
 
 #[Service]
 readonly class ListCommand extends BaseConsoleCommand
@@ -40,15 +44,18 @@ readonly class ListCommand extends BaseConsoleCommand
     public function process(array $arguments): void
     {
         $this->printer->print();
+
         $table = Table::create(['Method', 'Endpoint', 'Handler', 'Name']);
 
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
             if ($handler instanceof RoutedHandler) {
+                $routeName = $handler->method()->routeName();
+
                 $table->data[] = [
-                    $handler->method()->name(),
-                    $handler->endpointPattern(),
-                    $handler->handlerName(),
-                    $handler->method()->routeName(),
+                    Text::create($handler->method()->name(), Color::LightGray),
+                    Text::create($handler->endpointPattern(), Color::Green),
+                    Text::create($handler->handlerName(), Color::LightGray),
+                    $routeName !== null ? Text::create($routeName, Color::LightGray) : null,
                 ];
             }
             else {

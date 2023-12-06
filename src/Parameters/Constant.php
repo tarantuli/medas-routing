@@ -27,7 +27,7 @@ readonly class Constant implements Parameter
         return $value == $this->name;
     }
 
-    public function name(): ?string
+    public function name(): string|null
     {
         return null;
     }

@@ -26,7 +26,7 @@ class Anything implements Parameter
         return null;
     }
 
-    public function name(): ?string
+    public function name(): string|null
     {
         return null;
     }

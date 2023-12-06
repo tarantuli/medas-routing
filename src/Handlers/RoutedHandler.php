@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace Medas\Routing\Handlers;
 
 use Medas\Core\Interfaces\{ParameterResolveManager, RoutedRequestHandlerGeneratesEndpoint};
-use Medas\Routing\Methods\Method;
-use Medas\Routing\Parameters\{Constant, Integer, Parameter};
-use Medas\Routing\Route;
+use Medas\Routing\{
+    Methods\Method,
+    Parameters\Constant,
+    Parameters\Integer,
+    Parameters\Parameter,
+    Route
+};
 
 class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
 {
     private string $pattern;
+
     /** @var Parameter[] */
     private array $parameters;
+
     private bool $hasVariables;
 
     public function __construct(
@@ -26,15 +32,13 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
     )
     {
         $this->compileParameters();
+
         $this->pattern = $this->compilePattern();
     }
 
     private function compileParameters(): void
     {
-        $this->parameters = array_merge(
-            $this->route->parameters(),
-            $this->method->parameters()
-        );
+        $this->parameters = array_merge($this->route->parameters(), $this->method->parameters());
 
         if ($this->globalPrefix) {
             array_unshift($this->parameters, new Constant($this->globalPrefix));
@@ -45,6 +49,7 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
         foreach ($this->parameters as $parameter) {
             if (!$parameter instanceof Constant) {
                 $this->hasVariables = true;
+
                 break;
             }
         }
@@ -87,9 +92,7 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
 
     public function handler(): \Closure
     {
-        return service($this->handlerClass)->{
-        $this->handlerMethod
-        }(...);
+        return service($this->handlerClass)->{$this->handlerMethod}(...);
     }
 
     public function handles(string $method, string $path): bool

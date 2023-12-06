@@ -4,13 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
-use Medas\Core\Attributes\ConfigValue;
-use Medas\Core\Attributes\Service;
-use Medas\Routing\ConfigOptions\GlobalPrefixOption;
-use Medas\Routing\Handlers\Handler;
-use Medas\Routing\Handlers\RoutedHandler;
-use Medas\Routing\Methods\Method;
-use Medas\Routing\Route\Priority;
+use Medas\Core\Attributes\{ConfigValue, Service};
 
 #[Service]
 class HandlerFinder
@@ -18,20 +12,23 @@ class HandlerFinder
     private array $handlers;
 
     public function __construct(
-        #[ConfigValue(GlobalPrefixOption::class)]
+        #[ConfigValue(ConfigOptions\GlobalPrefixOption::class)]
         private readonly string|null $globalPrefix,
     )
     {
     }
 
-    /** @return RoutedHandler[] */
+    /** @return Handlers\RoutedHandler[] */
     public function find(): array
     {
         $this->handlers = [];
 
         $this->findHandlers();
 
-        usort($this->handlers, fn(Handler $a, Handler $b) => -($a->priority() <=> $b->priority()));
+        usort(
+            $this->handlers,
+            fn(Handlers\Handler $a, Handlers\Handler $b) => -($a->priority() <=> $b->priority())
+        );
 
         return $this->handlers;
     }
@@ -40,6 +37,7 @@ class HandlerFinder
     {
         foreach (sm()->getServiceClassNames() as $className) {
             $class = new \ReflectionClass($className);
+
             $this->checkForRoutedHandlers($class);
             $this->checkForDirectHandlers($class);
         }
@@ -55,24 +53,28 @@ class HandlerFinder
             return;
         }
 
-        $routePriority = attribute(Priority::class, $class);
+        $routePriority = attribute(Route\Priority::class, $class);
 
         foreach ($class->getMethods() as $method) {
             $this->processMethod($method, $routePriority, $baseRoute, $class);
         }
     }
 
-    private function processMethod(\ReflectionMethod $method, Priority|null $routePriority, Route $baseRoute, \ReflectionClass $class): void
+    private function processMethod(
+        \ReflectionMethod   $method,
+        Route\Priority|null $routePriority,
+        Route               $baseRoute,
+        \ReflectionClass    $class
+    ): void
     {
-        if (!$baseMethod = attribute(Method::class, $method)) {
+        if (!$baseMethod = attribute(Methods\Method::class, $method)) {
             return;
         }
 
-        $methodPriority = attribute(Priority::class, $method);
-
+        $methodPriority = attribute(Route\Priority::class, $method);
         $priority = $this->determinePriority($routePriority, $methodPriority);
 
-        $handler = new RoutedHandler(
+        $handler = new Handlers\RoutedHandler(
             $this->globalPrefix,
             $baseRoute,
             $baseMethod,
@@ -84,7 +86,7 @@ class HandlerFinder
         $this->handlers[] = $handler;
     }
 
-    private function determinePriority(?Priority $routePriority, ?Priority $methodPriority): int
+    private function determinePriority(Route\Priority|null $routePriority, Route\Priority|null $methodPriority): int
     {
         if ($methodPriority) {
             return $methodPriority->priority;
@@ -99,11 +101,11 @@ class HandlerFinder
 
     private function checkForDirectHandlers(\ReflectionClass $class): void
     {
-        if ($class->name === RoutedHandler::class) {
+        if ($class->name === Handlers\RoutedHandler::class) {
             return;
         }
 
-        if (!$class->implementsInterface(Handler::class)) {
+        if (!$class->implementsInterface(Handlers\Handler::class)) {
             return;
         }
 

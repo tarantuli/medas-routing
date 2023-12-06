@@ -8,7 +8,7 @@ namespace Medas\Routing\Route;
 class Priority
 {
     public function __construct(
-        public int $priority
+        public int $priority,
     )
     {
     }

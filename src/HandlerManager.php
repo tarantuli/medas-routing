@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
-use Medas\Core\Attributes\Service;
-use Medas\Core\Interfaces\{PrimesCache, RoutedRequestHandlerManager};
-use Medas\Routing\Handlers\Handler;
+use Medas\Core\{Attributes\Service, Interfaces\PrimesCache, Interfaces\RoutedRequestHandlerManager};
 use Medas\ServiceManager\Cache\CacheManager;
 
 #[Service]
@@ -28,7 +26,7 @@ readonly class HandlerManager implements RoutedRequestHandlerManager, PrimesCach
         return $handler->handle($method, $path);
     }
 
-    public function find(string $method, string $path): Handler|null
+    public function find(string $method, string $path): Handlers\Handler|null
     {
         foreach ($this->getActualHandlers() as $handler) {
             if ($handler->handles($method, $path)) {
@@ -39,7 +37,7 @@ readonly class HandlerManager implements RoutedRequestHandlerManager, PrimesCach
         return null;
     }
 
-    /** @return Handler[] */
+    /** @return Handlers\Handler[] */
     public function getActualHandlers(): array
     {
         return $this->cacheManager->get()->get(
@@ -71,7 +69,7 @@ readonly class HandlerManager implements RoutedRequestHandlerManager, PrimesCach
         return $handlersPerEndpoint;
     }
 
-    /** @return Handler[] */
+    /** @return Handlers\Handler[] */
     public function getAll(): array
     {
         return $this->cacheManager->get()->get(
@@ -80,15 +78,19 @@ readonly class HandlerManager implements RoutedRequestHandlerManager, PrimesCach
         );
     }
 
-    /** @param Handler[] $handlers */
-    private function selectByPriority(array $handlers): Handler
+    /** @param Handlers\Handler[] $handlers */
+    private function selectByPriority(array $handlers): Handlers\Handler
     {
         // Sort by priority, then select the handler with the highest value as the actual handler
-        usort($handlers, fn(Handler $a, Handler $b) => $a->priority() <=> $b->priority());
+        usort(
+            $handlers,
+            fn(Handlers\Handler $a, Handlers\Handler $b) => $a->priority() <=> $b->priority()
+        );
+
         return array_pop($handlers);
     }
 
-    public function findByName(string $name): Handler|null
+    public function findByName(string $name): Handlers\Handler|null
     {
         foreach ($this->getActualHandlers() as $handler) {
             if ($handler->routeName() === $name) {

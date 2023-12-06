@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Core\Attributes\Service;
-use Medas\Routing\Parameters\Parameter;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class Route extends Service
 {
-    /** @var Parameter[] */
+    /** @var Parameters\Parameter[] */
     private array $parameters;
 
     public function __construct(
-        Parameter|array              $parameters = [],
+        Parameters\Parameter|array   $parameters = [],
         private readonly string|null $endpointForEntity = null,
     )
     {
