@@ -70,6 +70,7 @@ readonly class ListCommand extends BaseConsoleCommand
 
         $this->printer
             ->printLine()
-            ->print($table);
+            ->print($table)
+            ->printLine();
     }
 }
