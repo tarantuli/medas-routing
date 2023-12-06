@@ -40,7 +40,7 @@ readonly class ListCommand extends BaseConsoleCommand
     public function process(array $arguments): void
     {
         $this->printer->print();
-        $table = Table::create(['method', 'endpoint', 'handler', 'name']);
+        $table = Table::create(['Method', 'Endpoint', 'Handler', 'Name']);
 
         foreach ($this->handlerManager->getActualHandlers() as $handler) {
             if ($handler instanceof RoutedHandler) {
@@ -61,6 +61,8 @@ readonly class ListCommand extends BaseConsoleCommand
             }
         }
 
-        $this->printer->print($table);
+        $this->printer
+            ->printLine()
+            ->print($table);
     }
 }
