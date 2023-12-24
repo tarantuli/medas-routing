@@ -55,11 +55,6 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
         }
     }
 
-    public function parameters(): array
-    {
-        return $this->parameters;
-    }
-
     private function compilePattern(): string
     {
         $pattern = '';
@@ -69,6 +64,11 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
         }
 
         return '/^' . $pattern . '$/';
+    }
+
+    public function parameters(): array
+    {
+        return $this->parameters;
     }
 
     public function handle(string $method, string $path): mixed

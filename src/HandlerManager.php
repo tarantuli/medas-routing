@@ -69,15 +69,6 @@ readonly class HandlerManager implements RoutedRequestHandlerManager, PrimesCach
         return $handlersPerEndpoint;
     }
 
-    /** @return Handlers\Handler[] */
-    public function getAll(): array
-    {
-        return $this->cacheManager->get()->get(
-            [$this::class, 'getAllHandlers'],
-            fn() => $this->handlerFinder->find()
-        );
-    }
-
     /** @param Handlers\Handler[] $handlers */
     private function selectByPriority(array $handlers): Handlers\Handler
     {
@@ -88,6 +79,15 @@ readonly class HandlerManager implements RoutedRequestHandlerManager, PrimesCach
         );
 
         return array_pop($handlers);
+    }
+
+    /** @return Handlers\Handler[] */
+    public function getAll(): array
+    {
+        return $this->cacheManager->get()->get(
+            [$this::class, 'getAllHandlers'],
+            fn() => $this->handlerFinder->find()
+        );
     }
 
     public function findByName(string $name): Handlers\Handler|null
