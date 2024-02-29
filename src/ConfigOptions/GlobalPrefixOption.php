@@ -27,7 +27,7 @@ readonly class GlobalPrefixOption implements ConfigOption
 
     public function description(): string
     {
-        return 'The global prefix to use for all routes, defaults to nothing';
+        return 'The global prefix to use for all routes';
     }
 
     public function isValid(mixed $value): bool
