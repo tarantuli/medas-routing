@@ -8,7 +8,7 @@ use Medas\Core\Interfaces\{Guid as GuidType, GuidProvider};
 
 class Guid extends BaseParameter
 {
-    const REGEX_PATTERN = '[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?';
+    private const REGEX_PATTERN = '[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?';
 
     public function pattern(): string
     {
