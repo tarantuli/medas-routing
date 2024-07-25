@@ -5,45 +5,75 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Core\Attributes\{ConfigValue, Service};
+use Medas\ServiceManager\Cache\CacheManager;
 
 #[Service]
-class HandlerFinder
+readonly class HandlerFinder
 {
-    private array $handlers;
-
     public function __construct(
         #[ConfigValue(ConfigOptions\GlobalPrefixOption::class)]
-        private readonly string|null $globalPrefix,
+        private string|null  $globalPrefix,
+        private CacheManager $cacheManager,
     )
     {
     }
 
-    /** @return Handlers\RoutedHandler[] */
-    public function find(): array
+    public function findActualHandlers(): array
     {
-        $this->handlers = [];
+        $handlers = [];
 
-        $this->findHandlers();
+        foreach ($this->collectHandlersPerEndpoint() as $handlersForEndpoint) {
+            $handlers[] = $this->selectByPriority($handlersForEndpoint);
+        }
 
-        usort(
-            $this->handlers,
-            fn(Handlers\Handler $a, Handlers\Handler $b) => -($a->priority() <=> $b->priority())
-        );
-
-        return $this->handlers;
+        return $handlers;
     }
 
-    private function findHandlers(): void
+    private function collectHandlersPerEndpoint(): array
     {
+        $handlersPerEndpoint = [];
+
+        foreach ($this->getAll() as $handler) {
+            $endpoint = $handler->endpointName();
+            $handlersPerEndpoint[$endpoint][] = $handler;
+        }
+
+        return $handlersPerEndpoint;
+    }
+
+    /** @param RouteHandler[] $handlers */
+    private function selectByPriority(array $handlers): RouteHandler
+    {
+        // Sort by priority, then select the handler with the highest value as the actual handler
+        usort($handlers, fn(RouteHandler $a, RouteHandler $b) => $a->priority() <=> $b->priority());
+
+        return array_pop($handlers);
+    }
+
+    /** @return RouteHandler[] */
+    public function getAll(): array
+    {
+        return $this->cacheManager->get()->get(
+            [$this::class, 'getAllHandlers'],
+            fn() => $this->findAll()
+        );
+    }
+
+    /** @return RouteHandler[] */
+    private function findAll(): array
+    {
+        $handlers = [];
+
         foreach (sm()->getServiceClassNames() as $className) {
             $class = new \ReflectionClass($className);
 
-            $this->checkForRoutedHandlers($class);
-            $this->checkForDirectHandlers($class);
+            $this->checkForRoutedHandlers($class, $handlers);
         }
+
+        return $handlers;
     }
 
-    private function checkForRoutedHandlers(\ReflectionClass $class): void
+    private function checkForRoutedHandlers(\ReflectionClass $class, array &$handlers): void
     {
         if ($class->isAbstract()) {
             return;
@@ -56,7 +86,7 @@ class HandlerFinder
         $routePriority = attribute(Route\Priority::class, $class);
 
         foreach ($class->getMethods() as $method) {
-            $this->processMethod($method, $routePriority, $baseRoute, $class);
+            $this->processMethod($method, $routePriority, $baseRoute, $class, $handlers);
         }
     }
 
@@ -64,7 +94,8 @@ class HandlerFinder
         \ReflectionMethod   $method,
         Route\Priority|null $routePriority,
         Route               $baseRoute,
-        \ReflectionClass    $class
+        \ReflectionClass    $class,
+        array               &$handlers
     ): void
     {
         if (!$baseMethod = attribute(Methods\Method::class, $method)) {
@@ -74,7 +105,7 @@ class HandlerFinder
         $methodPriority = attribute(Route\Priority::class, $method);
         $priority = $this->determinePriority($routePriority, $methodPriority);
 
-        $handler = new Handlers\RoutedHandler(
+        $handler = new RouteHandler(
             $this->globalPrefix,
             $baseRoute,
             $baseMethod,
@@ -83,7 +114,7 @@ class HandlerFinder
             $priority
         );
 
-        $this->handlers[] = $handler;
+        $handlers[] = $handler;
     }
 
     private function determinePriority(Route\Priority|null $routePriority, Route\Priority|null $methodPriority): int
@@ -97,18 +128,5 @@ class HandlerFinder
         }
 
         return 0;
-    }
-
-    private function checkForDirectHandlers(\ReflectionClass $class): void
-    {
-        if ($class->name === Handlers\RoutedHandler::class) {
-            return;
-        }
-
-        if (!$class->implementsInterface(Handlers\Handler::class)) {
-            return;
-        }
-
-        $this->handlers[] = service($class->name);
     }
 }

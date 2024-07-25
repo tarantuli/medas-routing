@@ -13,12 +13,14 @@ class EndpointFinderTest extends TestCase
     public function testForInstance(): void
     {
         $route = service(EndpointFinder::class)->forEntity(new Project(1));
+
         self::assertEquals('/projects/1', $route);
     }
 
     public function testForCollection(): void
     {
         $route = service(EndpointFinder::class)->forCollection(Project::class);
+
         self::assertEquals('/projects', $route);
     }
 }

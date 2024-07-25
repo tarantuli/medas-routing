@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\RoutingTest\MockUps;
 
-use Medas\Routing\Methods\Get;
-use Medas\Routing\Parameters\Constant;
-use Medas\Routing\Parameters\Integer;
-use Medas\Routing\Route;
 use Medas\Core\Attributes\Service;
+use Medas\Routing\{Methods\Get, Parameters\Constant, Parameters\Integer, Route};
 
 #[Service, Route(new Constant('projects'), Project::class)]
 class ProjectController

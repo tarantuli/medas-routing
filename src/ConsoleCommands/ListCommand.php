@@ -13,7 +13,7 @@ use Medas\Console\{
     Text
 };
 use Medas\Core\Attributes\Service;
-use Medas\Routing\{HandlerManager, Handlers\RoutedHandler};
+use Medas\Routing\{HandlerManager, RouteHandler};
 
 #[Service]
 readonly class ListCommand extends BaseConsoleCommand
@@ -47,14 +47,16 @@ readonly class ListCommand extends BaseConsoleCommand
 
         $table = Table::create(['Method', 'Endpoint', 'Handler', 'Name']);
 
-        foreach ($this->handlerManager->getActualHandlers() as $handler) {
-            if ($handler instanceof RoutedHandler) {
+        foreach ($this->handlerManager->getHandlers() as $handler) {
+            if ($handler instanceof RouteHandler) {
                 $routeName = $handler->method()->routeName();
+                $methodReflector = $handler->handlerMethod();
+                $handlerName = "$methodReflector->class::$methodReflector->name";
 
                 $table->data[] = [
                     Text::create($handler->method()->name(), Color::LightGray),
                     Text::create($handler->endpointPattern(), Color::Green),
-                    Text::create($handler->handlerName(), Color::LightGray),
+                    Text::create($handlerName, Color::LightGray),
                     $routeName !== null ? Text::create($routeName, Color::LightGray) : null,
                 ];
             }

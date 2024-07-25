@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\RoutingTest\MockUps;
 
-use Medas\Routing\Methods\Get;
-use Medas\Routing\Parameters\Constant;
-use Medas\Routing\Route;
 use Medas\Core\Attributes\Service;
+use Medas\Routing\{Methods\Get, Parameters\Constant, Route};
 
 #[Service, Route(new Constant('priority-entrypoint'))]
 class PriorityController

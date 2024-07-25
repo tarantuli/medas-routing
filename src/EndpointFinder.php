@@ -17,8 +17,8 @@ readonly class EndpointFinder
 
     public function forEntity(object $instance): string|null
     {
-        foreach ($this->handlerManager->getActualHandlers() as $handler) {
-            if (!($handler instanceof Handlers\RoutedHandler)) {
+        foreach ($this->handlerManager->getHandlers() as $handler) {
+            if (!($handler instanceof RouteHandler)) {
                 continue;
             }
 
@@ -52,8 +52,8 @@ readonly class EndpointFinder
 
     public function forCollection(string $class): string|null
     {
-        foreach ($this->handlerManager->getActualHandlers() as $handler) {
-            if (!($handler instanceof Handlers\RoutedHandler)) {
+        foreach ($this->handlerManager->getHandlers() as $handler) {
+            if (!($handler instanceof RouteHandler)) {
                 continue;
             }
 

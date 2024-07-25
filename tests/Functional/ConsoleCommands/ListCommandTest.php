@@ -12,10 +12,16 @@ class ListCommandTest extends TestCase
     public function testBasicUsage(): void
     {
         ob_start();
+
         service(ListCommand::class)->process([]);
+
         $output = ob_get_clean();
 
         self::assertStringContainsString('/projects/:id', $output);
-        self::assertStringContainsString('Medas\RoutingTest\MockUps\ProjectController::getEntity', $output);
+
+        self::assertStringContainsString(
+            'Medas\RoutingTest\MockUps\ProjectController::getEntity',
+            $output
+        );
     }
 }

@@ -2,33 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Medas\Routing\Handlers;
+namespace Medas\Routing;
 
-use Medas\Core\Interfaces\{ParameterResolveManager, RoutedRequestHandlerGeneratesEndpoint};
-use Medas\Routing\{
-    Methods\Method,
-    Parameters\Constant,
-    Parameters\Integer,
-    Parameters\Parameter,
-    Route
+use Medas\Core\Interfaces\{
+    HttpRequestHandler,
+    HttpRequestHandlerGeneratesEndpoint,
+    ParameterResolveManager
 };
 
-class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
+class RouteHandler implements HttpRequestHandler, HttpRequestHandlerGeneratesEndpoint
 {
     private string $pattern;
 
-    /** @var Parameter[] */
+    /** @var Parameters\Parameter[] */
     private array $parameters;
 
     private bool $hasVariables;
 
     public function __construct(
-        private readonly string|null $globalPrefix,
-        private readonly Route       $route,
-        private readonly Method      $method,
-        private readonly string      $handlerClass,
-        private readonly string      $handlerMethod,
-        private readonly int         $priority,
+        private readonly string|null    $globalPrefix,
+        private readonly Route          $route,
+        private readonly Methods\Method $method,
+        private readonly string         $handlerClass,
+        private readonly string         $handlerMethod,
+        private readonly int            $priority,
     )
     {
         $this->compileParameters();
@@ -41,13 +38,13 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
         $this->parameters = array_merge($this->route->parameters(), $this->method->parameters());
 
         if ($this->globalPrefix) {
-            array_unshift($this->parameters, new Constant($this->globalPrefix));
+            array_unshift($this->parameters, new Parameters\Constant($this->globalPrefix));
         }
 
         $this->hasVariables = false;
 
         foreach ($this->parameters as $parameter) {
-            if (!$parameter instanceof Constant) {
+            if (!$parameter instanceof Parameters\Constant) {
                 $this->hasVariables = true;
 
                 break;
@@ -71,48 +68,19 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
         return $this->parameters;
     }
 
-    public function handle(string $method, string $path): mixed
-    {
-        preg_match($this->pattern, $path, $match);
-
-        $arguments = [];
-
-        foreach ($this->parameters as $parameter) {
-            if ($parameter->name()) {
-                $arguments[$parameter->name()] = $parameter->denormalize($match[$parameter->name()]);
-            }
-        }
-
-        $handler = $this->handler();
-        $arguments = service(ParameterResolveManager::class)
-            ->resolveMethodParameters(new \ReflectionFunction($handler), $arguments);
-
-        return $handler(...$arguments);
-    }
-
-    public function handler(): \Closure
-    {
-        return service($this->handlerClass)->{$this->handlerMethod}(...);
-    }
-
-    public function handles(string $method, string $path): bool
-    {
-        return $this->method->name() === $method && preg_match($this->pattern, $path);
-    }
-
     public function priority(): int
     {
         return $this->priority;
     }
 
+    public function method(): Methods\Method
+    {
+        return $this->method;
+    }
+
     public function route(): Route
     {
         return $this->route;
-    }
-
-    public function method(): Method
-    {
-        return $this->method;
     }
 
     public function routeName(): string|null
@@ -141,10 +109,10 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
         $parameters = [];
 
         foreach ($this->parameters as $parameter) {
-            if ($parameter instanceof Constant) {
+            if ($parameter instanceof Parameters\Constant) {
                 $parameters[] = $parameter->readablePattern();
             }
-            elseif ($parameter instanceof Integer) {
+            elseif ($parameter instanceof Parameters\Integer) {
                 if (!array_key_exists($parameter->name(), $arguments)) {
                     throw new \Exception('missing argument named ' . $parameter->name());
                 }
@@ -159,13 +127,42 @@ class RoutedHandler implements Handler, RoutedRequestHandlerGeneratesEndpoint
         return '/' . implode('/', $parameters);
     }
 
-    public function handlerName(): string
-    {
-        return "$this->handlerClass::$this->handlerMethod";
-    }
-
     public function hasVariables(): bool
     {
         return $this->hasVariables;
+    }
+
+    public function handles(string $method, string $path): bool
+    {
+        return $this->method->name() === $method && preg_match($this->pattern, $path);
+    }
+
+    public function handle(string $method, string $path): mixed
+    {
+        preg_match($this->pattern, $path, $match);
+
+        $arguments = [];
+
+        foreach ($this->parameters as $parameter) {
+            if ($parameter->name()) {
+                $arguments[$parameter->name()] = $parameter->denormalize($match[$parameter->name()]);
+            }
+        }
+
+        $handler = $this->handler();
+        $arguments = service(ParameterResolveManager::class)
+            ->resolveMethodParameters(new \ReflectionFunction($handler), $arguments);
+
+        return $handler(...$arguments);
+    }
+
+    public function handler(): \Closure
+    {
+        return service($this->handlerClass)->{$this->handlerMethod}(...);
+    }
+
+    public function handlerMethod(): \ReflectionMethod
+    {
+        return new \ReflectionMethod($this->handlerClass, $this->handlerMethod);
     }
 }
