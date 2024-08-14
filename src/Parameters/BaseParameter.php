@@ -6,7 +6,9 @@ namespace Medas\Routing\Parameters;
 
 abstract class BaseParameter implements Parameter
 {
-    public function __construct(protected string $name)
+    public function __construct(
+        protected string $name,
+    )
     {
     }
 

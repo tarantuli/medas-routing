@@ -4,8 +4,19 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Parameters;
 
-class Anything extends BaseParameter
+class Anything implements Parameter
 {
+    public function __construct(
+        protected string|null $name,
+    )
+    {
+    }
+
+    public function name(): string|null
+    {
+        return $this->name;
+    }
+
     public function pattern(): string
     {
         return '.*';
@@ -25,5 +36,4 @@ class Anything extends BaseParameter
     {
         return null;
     }
-
 }
