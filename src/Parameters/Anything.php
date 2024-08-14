@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Parameters;
 
-class Anything implements Parameter
+class Anything extends BaseParameter
 {
     public function pattern(): string
     {
@@ -22,11 +22,6 @@ class Anything implements Parameter
     }
 
     public function denormalize(string $value): null
-    {
-        return null;
-    }
-
-    public function name(): string|null
     {
         return null;
     }
