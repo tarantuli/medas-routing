@@ -19,12 +19,12 @@ class Anything implements Parameter
 
     public function pattern(): string
     {
-        return '.*';
+        return sprintf('(?<%s>[^/]+)', $this->name);
     }
 
     public function readablePattern(): string
     {
-        return '*';
+        return ':' . $this->name;
     }
 
     public function isValid(mixed $value): bool
@@ -32,8 +32,8 @@ class Anything implements Parameter
         return true;
     }
 
-    public function denormalize(string $value): null
+    public function denormalize(string $value): string
     {
-        return null;
+        return $value;
     }
 }
