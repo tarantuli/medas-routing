@@ -25,4 +25,5 @@ class Anything extends BaseParameter
     {
         return null;
     }
+
 }
