@@ -7,7 +7,7 @@ namespace Medas\Routing\Parameters;
 class Anything implements Parameter
 {
     public function __construct(
-        protected string|null $name,
+        protected string|null $name = null,
     )
     {
     }
