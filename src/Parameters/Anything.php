@@ -19,7 +19,7 @@ class Anything implements Parameter
 
     public function pattern(): string
     {
-        return sprintf('(?<%s>[^\/]+)', $this->name);
+        return $this->name === null ? '.*' : sprintf('(?<%s>[^\/]+)', $this->name);
     }
 
     public function readablePattern(): string
