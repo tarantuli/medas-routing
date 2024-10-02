@@ -6,11 +6,12 @@ namespace Medas\Routing;
 
 use Medas\Core\Interfaces\{
     HttpRequestHandler,
+    HttpRequestHandlerDefersToMethod,
     HttpRequestHandlerGeneratesEndpoint,
     ParameterResolveManager
 };
 
-class RouteHandler implements HttpRequestHandler, HttpRequestHandlerGeneratesEndpoint
+class RouteHandler implements HttpRequestHandler, HttpRequestHandlerGeneratesEndpoint, HttpRequestHandlerDefersToMethod
 {
     private string $pattern;
 
