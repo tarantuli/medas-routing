@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\Routing\Parameters;
 
-use Medas\Core\Interfaces\{Guid as GuidType, GuidProvider};
+use Medas\Core\Interfaces\{Uuid as UuidType, UuidProvider};
 
-class Guid extends BaseParameter
+class Uuid extends BaseParameter
 {
     private const REGEX_PATTERN = '[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?';
 
@@ -17,7 +17,7 @@ class Guid extends BaseParameter
 
     public function readablePattern(): string
     {
-        return $this->name === 'id' ? ':guid' : ':' . $this->name . '-guid';
+        return $this->name === 'id' ? ':uuid' : ':' . $this->name . '-uuid';
     }
 
     public function isValid(mixed $value): bool
@@ -25,8 +25,8 @@ class Guid extends BaseParameter
         return preg_match('/^' . self::REGEX_PATTERN . '$/', $value);
     }
 
-    public function denormalize(string $value): GuidType
+    public function denormalize(string $value): UuidType
     {
-        return service(GuidProvider::class)->fromString($value);
+        return service(UuidProvider::class)->fromString($value);
     }
 }
