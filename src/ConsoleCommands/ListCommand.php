@@ -41,6 +41,11 @@ readonly class ListCommand extends BaseConsoleCommand
         return 'Prints a list of routes';
     }
 
+    public function aliases(): array
+    {
+        return ['routes'];
+    }
+
     public function process(array $arguments): void
     {
         $this->printer->print();
