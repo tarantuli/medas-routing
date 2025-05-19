@@ -24,7 +24,7 @@ class Anything implements Parameter
 
     public function readablePattern(): string
     {
-        return ':' . $this->name;
+        return ':' . ($this->name ?? 'anything');
     }
 
     public function isValid(mixed $value): bool
