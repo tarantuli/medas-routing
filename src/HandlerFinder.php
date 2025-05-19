@@ -91,7 +91,7 @@ readonly class HandlerFinder
             $routePriority = attribute(Route\Priority::class, $class);
 
             try {
-                $method = $class->getMethod('__call');
+                $method = $class->getMethod('handle');
             }
             catch (\ReflectionException) {
                 throw new Exceptions\SingleRouteDoesNotImplementCallMethod($class);
