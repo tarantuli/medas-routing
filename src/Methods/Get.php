@@ -10,10 +10,10 @@ use Medas\Routing\Parameters\Parameter;
 class Get extends BaseMethod
 {
     public function __construct(
-        Parameter|array       $parameters = [],
-        private readonly bool $isCollectionEndpoint = false,
-        private readonly bool $isEntityEndpoint = false,
-        readonly string|null  $name = null,
+        string|Parameter|array $parameters = [],
+        private readonly bool  $isCollectionEndpoint = false,
+        private readonly bool  $isEntityEndpoint = false,
+        readonly string|null   $name = null,
     )
     {
         parent::__construct($parameters, $name);

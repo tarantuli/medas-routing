@@ -13,10 +13,14 @@ class Route extends Service
     private array $parameters;
 
     public function __construct(
-        Parameters\Parameter|array   $parameters = [],
-        private readonly string|null $endpointForEntity = null,
+        string|Parameters\Parameter|array $parameters = [],
+        private readonly string|null      $endpointForEntity = null,
     )
     {
+        if (is_string($parameters)) {
+            $parameters = [new Parameters\Constant($parameters)];
+        }
+
         $this->parameters = is_array($parameters) ? $parameters : [$parameters];
     }
 
