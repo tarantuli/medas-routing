@@ -15,6 +15,6 @@ class SingleRouteDoesNotImplementCallMethod extends BaseException
 
     public function pattern(): string
     {
-        return 'class %s is tagged with SingleRoute, but does not implement the handle() method';
+        return 'class %s is tagged with SingleRoute, but does not implement the __call() method';
     }
 }
