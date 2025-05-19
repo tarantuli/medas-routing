@@ -79,24 +79,13 @@ readonly class HandlerFinder
             return;
         }
 
-        if ($baseRoute = attribute(Route::class, $class)) {
-            $routePriority = attribute(Route\Priority::class, $class);
-
-            foreach ($class->getMethods() as $method) {
-                $this->processMethod($method, $routePriority, $baseRoute, $class, $handlers);
-            }
+        if (!$baseRoute = attribute(Route::class, $class)) {
+            return;
         }
 
-        if ($baseRoute = attribute(SingleRoute::class, $class)) {
-            $routePriority = attribute(Route\Priority::class, $class);
+        $routePriority = attribute(Route\Priority::class, $class);
 
-            try {
-                $method = $class->getMethod('__call');
-            }
-            catch (\ReflectionException) {
-                throw new Exceptions\SingleRouteDoesNotImplementCallMethod($class);
-            }
-
+        foreach ($class->getMethods() as $method) {
             $this->processMethod($method, $routePriority, $baseRoute, $class, $handlers);
         }
     }
@@ -104,7 +93,7 @@ readonly class HandlerFinder
     private function processMethod(
         \ReflectionMethod   $method,
         Route\Priority|null $routePriority,
-        Route|SingleRoute   $baseRoute,
+        Route               $baseRoute,
         \ReflectionClass    $class,
         array               &$handlers
     ): void
