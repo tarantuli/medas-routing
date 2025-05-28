@@ -17,7 +17,7 @@ class Uuid extends BaseParameter
 
     public function readablePattern(): string
     {
-        return $this->name === 'id' ? ':uuid' : ':' . $this->name . '-uuid';
+        return in_array($this->name, ['id', 'uuid'], true) ? ':uuid' : ':' . $this->name . '-uuid';
     }
 
     public function isValid(mixed $value): bool
