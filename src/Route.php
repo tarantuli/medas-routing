@@ -17,11 +17,13 @@ class Route extends Service
         private readonly string|null      $endpointForEntity = null,
     )
     {
-        if (is_string($parameters)) {
-            $parameters = [new Parameters\Constant($parameters)];
-        }
-
         $this->parameters = is_array($parameters) ? $parameters : [$parameters];
+
+        foreach ($this->parameters as &$parameter) {
+            if (is_string($parameter)) {
+                $parameter = new Parameters\Constant($parameter);
+            }
+        }
     }
 
     public function parameters(): array
