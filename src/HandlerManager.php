@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Core\{Attributes\Service, Interfaces\HttpRequestHandlerManager, Interfaces\PrimesCache};
-use Medas\ServiceManager\Cache\CacheManager;
 
 #[Service]
 readonly class HandlerManager implements HttpRequestHandlerManager, PrimesCache
 {
     public function __construct(
-        private CacheManager  $cacheManager,
         private HandlerFinder $handlerFinder,
     )
     {
@@ -51,7 +49,7 @@ readonly class HandlerManager implements HttpRequestHandlerManager, PrimesCache
     /** @return RouteHandler[] */
     public function getHandlers(): array
     {
-        return $this->cacheManager->get()->get(
+        return cache(
             [$this::class, 'getActualHandlers'],
             fn() => $this->handlerFinder->findActualHandlers()
         );
@@ -59,8 +57,9 @@ readonly class HandlerManager implements HttpRequestHandlerManager, PrimesCache
 
     public function primeCache(): void
     {
-        $this->cacheManager->get()->remove([HandlerFinder::class, 'getAllHandlers']);
-        $this->cacheManager->get()->remove([$this::class, 'getActualHandlers']);
+        cacheUnset([HandlerFinder::class, 'getAllHandlers']);
+        cacheUnset([$this::class, 'getActualHandlers']);
+
         $this->getHandlers();
     }
 }

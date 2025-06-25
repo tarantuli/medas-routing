@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Medas\Routing;
 
 use Medas\Core\Attributes\{ConfigValue, Service};
-use Medas\ServiceManager\Cache\CacheManager;
 
 #[Service]
 readonly class HandlerFinder
 {
     public function __construct(
         #[ConfigValue(ConfigOptions\GlobalPrefixOption::class)]
-        private string|null  $globalPrefix,
-        private CacheManager $cacheManager,
+        private string|null $globalPrefix,
     )
     {
     }
@@ -53,10 +51,7 @@ readonly class HandlerFinder
     /** @return RouteHandler[] */
     public function getAll(): array
     {
-        return $this->cacheManager->get()->get(
-            [$this::class, 'getAllHandlers'],
-            fn() => $this->findAll()
-        );
+        return cache([$this::class, 'getAllHandlers'], fn() => $this->findAll());
     }
 
     /** @return RouteHandler[] */
