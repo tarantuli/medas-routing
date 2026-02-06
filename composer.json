@@ -1,32 +1,31 @@
 {
-    "name": "morphp/medas-routing",
-    "description": "Medas routing",
-    "keywords": [
-        "http"
-    ],
-    "authors": [
-        {
-            "name": "Patrick Morpey",
-            "email": "patrick@morphp.nl"
-        }
-    ],
-    "type": "library",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {
-        "morphp/medas-console": "dev-dev",
-        "morphp/medas-core": "dev-dev"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "morphp/medas-console-printer": "dev-dev",
-        "morphp/medas-config-options": "dev-dev",
-        "morphp/medas-config-manager": "dev-dev"
-    },
-    "autoload": {
-        "psr-4": {
-            "Medas\\Routing\\": "src/",
-            "Medas\\RoutingTest\\": "tests/"
-        }
+  "name": "morphp/medas-routing",
+  "description": "Medas routing",
+  "version": "2.0.0",
+  "keywords": [
+    "http"
+  ],
+  "authors": [
+    {
+      "name": "Patrick Morpey",
+      "email": "patrick@morphp.nl"
     }
+  ],
+  "type": "library",
+  "require": {
+    "morphp/medas-console": "^2",
+    "morphp/medas-core": "^2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "morphp/medas-console-printer": "^2",
+    "morphp/medas-config-options": "^2",
+    "morphp/medas-config-manager": "^2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Medas\\Routing\\": "src/",
+      "Medas\\RoutingTest\\": "tests/"
+    }
+  }
 }
