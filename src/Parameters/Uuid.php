@@ -8,7 +8,7 @@ use Medas\Core\Interfaces\{Uuid as UuidType, UuidProvider};
 
 class Uuid extends BaseParameter
 {
-    private const REGEX_PATTERN = '[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?';
+    private const string REGEX_PATTERN = '[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?';
 
     public function pattern(): string
     {
@@ -22,7 +22,7 @@ class Uuid extends BaseParameter
 
     public function isValid(mixed $value): bool
     {
-        return preg_match('/^' . self::REGEX_PATTERN . '$/', $value);
+        return is_string($value) && preg_match('/^' . self::REGEX_PATTERN . '$/', $value) === 1;
     }
 
     public function denormalize(string $value): UuidType

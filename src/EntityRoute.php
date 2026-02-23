@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
-use Medas\Core\IdentifierMaker;
+use Medas\Core\Identifier;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
 class EntityRoute extends Route
@@ -15,7 +15,7 @@ class EntityRoute extends Route
     {
         $lastBackslash = strrpos($className, '\\');
         $shortName = $lastBackslash === false ? $className : substr($className, $lastBackslash + 1);
-        $identifier = service(IdentifierMaker::class)->fromCamelCase($shortName);
+        $identifier = new Identifier($shortName);
 
         parent::__construct(
             new Parameters\Constant($identifier->toKebabCase()),

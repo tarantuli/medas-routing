@@ -7,7 +7,7 @@ namespace Medas\Routing\ConfigOptions;
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup};
 
 #[Service]
-class RoutingGroup implements ConfigGroup
+readonly class RoutingGroup implements ConfigGroup
 {
     public function parent(): ConfigGroup|null
     {

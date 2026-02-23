@@ -6,6 +6,9 @@ namespace Medas\Routing\Parameters;
 
 class Anything implements Parameter
 {
+    /**
+     * A Anything parameter with no name is equivalent to a wildcard.
+     */
     public function __construct(
         protected string|null $name = null,
     )

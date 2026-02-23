@@ -115,13 +115,18 @@ readonly class HandlerFinder
     private function determinePriority(Route\Priority|null $routePriority, Route\Priority|null $methodPriority): int
     {
         if ($methodPriority) {
-            return $methodPriority->priority;
+            return $methodPriority->priority();
         }
 
         if ($routePriority) {
-            return $routePriority->priority;
+            return $routePriority->priority();
         }
 
         return 0;
+    }
+
+    public function clearCache(): void
+    {
+        cacheUnset([$this::class, 'getAllHandlers']);
     }
 }

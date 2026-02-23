@@ -21,6 +21,12 @@ abstract class BaseMethod implements Method
         }
 
         $this->parameters = is_array($parameters) ? $parameters : [$parameters];
+
+        foreach ($this->parameters as &$parameter) {
+            if (is_string($parameter)) {
+                $parameter = new Constant($parameter);
+            }
+        }
     }
 
     public function parameters(): array

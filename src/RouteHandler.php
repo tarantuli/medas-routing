@@ -115,13 +115,19 @@ class RouteHandler implements HttpRequestHandler, HttpRequestHandlerGeneratesEnd
             }
             elseif ($parameter instanceof Parameters\Integer) {
                 if (!array_key_exists($parameter->name(), $arguments)) {
-                    throw new \Exception('missing argument named ' . $parameter->name());
+                    throw new Exceptions\MissingArgument($parameter->name());
                 }
 
                 $parameters[] = (string) $arguments[$parameter->name()];
             }
+            elseif ($parameter instanceof Parameters\Uuid) {
+                $parameters[] = $parameter->readablePattern();
+            }
+            elseif ($parameter instanceof Parameters\Anything) {
+                $parameters[] = $parameter->readablePattern();
+            }
             else {
-                throw new \Exception('unhandled parameter of type ' . $parameter::class);
+                throw new Exceptions\UnhandledParameterType($parameter);
             }
         }
 
@@ -135,7 +141,7 @@ class RouteHandler implements HttpRequestHandler, HttpRequestHandlerGeneratesEnd
 
     public function handles(string $method, string $path): bool
     {
-        return $this->method->name() === $method && preg_match($this->pattern, $path);
+        return $this->method->name() === $method && preg_match($this->pattern, $path) === 1;
     }
 
     public function handle(string $method, string $path): mixed

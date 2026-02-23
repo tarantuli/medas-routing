@@ -39,8 +39,8 @@ readonly class EndpointFinder
                     $endpoint .= '/' . $parameter->readablePattern();
                 }
                 elseif ($parameter instanceof Parameters\BaseParameter) {
-                    $endpoint .= '/'
-                        . (new \ReflectionProperty($instance, $parameter->name()))->getValue($instance);
+                    $property = new \ReflectionProperty($instance, $parameter->name());
+                    $endpoint .= '/' . $property->getValue($instance);
                 }
             }
 

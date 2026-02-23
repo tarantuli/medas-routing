@@ -26,24 +26,12 @@ readonly class HandlerManager implements HttpRequestHandlerManager, PrimesCache
 
     public function find(string $method, string $path): RouteHandler|null
     {
-        foreach ($this->getHandlers() as $handler) {
-            if ($handler->handles($method, $path)) {
-                return $handler;
-            }
-        }
-
-        return null;
+        return array_find($this->getHandlers(), fn($handler) => $handler->handles($method, $path));
     }
 
     public function findByName(string $name): RouteHandler|null
     {
-        foreach ($this->getHandlers() as $handler) {
-            if ($handler->routeName() === $name) {
-                return $handler;
-            }
-        }
-
-        return null;
+        return array_find($this->getHandlers(), fn($handler) => $handler->routeName() === $name);
     }
 
     /** @return RouteHandler[] */
@@ -57,7 +45,8 @@ readonly class HandlerManager implements HttpRequestHandlerManager, PrimesCache
 
     public function primeCache(): void
     {
-        cacheUnset([HandlerFinder::class, 'getAllHandlers']);
+        $this->handlerFinder->clearCache();
+
         cacheUnset([$this::class, 'getActualHandlers']);
 
         $this->getHandlers();
