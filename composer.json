@@ -25,7 +25,11 @@
   "autoload": {
     "psr-4": {
       "Medas\\Routing\\": "src/",
-      "Medas\\RoutingTest\\": "tests/"
+      "Medas\\RoutingTest\\": "tests/"    },
+    "autoload-dev": {
+      "psr-4": {
+        "Medas\\RoutingTest\\": "tests/"
+      }
     }
   }
 }
