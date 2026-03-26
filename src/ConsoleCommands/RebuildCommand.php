@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Medas\Routing\ConsoleCommands;
 
-use Medas\Console\{Commands\BaseConsoleCommand, Commands\ConsoleCommandGroup, Printer, Text};
+use Medas\Console\{
+    Commands\BaseConsoleCommand,
+    Commands\CommandInput,
+    Commands\ConsoleCommandGroup,
+    Printer,
+    Text
+};
 use Medas\Core\Attributes\Service;
 use Medas\Routing\HandlerManager;
 
@@ -34,7 +40,7 @@ readonly class RebuildCommand extends BaseConsoleCommand
         return 'Clears the cache and rebuilds the route list';
     }
 
-    public function process(array $arguments): void
+    public function process(CommandInput $input): void
     {
         $this->handlerManager->primeCache();
         $this->printer->print(Text::create('Rebuilt the cache!'));

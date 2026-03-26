@@ -6,7 +6,9 @@ namespace Medas\Routing\ConsoleCommands;
 
 use Medas\Console\{
     Commands\BaseConsoleCommand,
+    Commands\CommandInput,
     Commands\ConsoleCommandGroup,
+    Commands\Option,
     Formats\Color,
     Printer,
     Table,
@@ -46,7 +48,19 @@ readonly class ListCommand extends BaseConsoleCommand
         return ['routes'];
     }
 
-    public function process(array $arguments): void
+    public function maxArgumentCount(): int
+    {
+        return 1;
+    }
+
+    public function options(): array
+    {
+        return [
+            Option::valueRequired('method', 'm'),
+        ];
+    }
+
+    public function process(CommandInput $input): void
     {
         $this->printer->print();
 
@@ -57,6 +71,15 @@ readonly class ListCommand extends BaseConsoleCommand
                 $routeName = $handler->method()->routeName();
                 $methodReflector = $handler->handlerMethod();
                 $handlerName = "$methodReflector->class::$methodReflector->name";
+
+                if ($input->hasOption('method')
+                        && !strcasecmp($input->getOption('method'), $handler->method()->name())) {
+                    continue;
+                }
+
+                if ($input->hasArgument(0) && !strcasecmp($input->getArgument(0), $handler->endpointName())) {
+                    continue;
+                }
 
                 $table->data[] = [
                     Text::create($handler->method()->name(), Color::LightGray),
