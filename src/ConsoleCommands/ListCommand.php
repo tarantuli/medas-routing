@@ -9,7 +9,7 @@ use Medas\Console\{
     Commands\CommandInput,
     Commands\ConsoleCommandGroup,
     Commands\Option,
-    Formats\Color,
+    Formats\SafeColor,
     Printer,
     Table,
     Text
@@ -82,10 +82,10 @@ readonly class ListCommand extends BaseConsoleCommand
                 }
 
                 $table->data[] = [
-                    Text::create($handler->method()->name(), Color::LightGray),
-                    Text::create($handler->endpointPattern(), Color::Green),
-                    Text::create($handlerName, Color::LightGray),
-                    $routeName !== null ? Text::create($routeName, Color::LightGray) : null,
+                    Text::create($handler->method()->name(), SafeColor::LightGray),
+                    Text::create($handler->endpointPattern(), SafeColor::Green),
+                    Text::create($handlerName, SafeColor::LightGray),
+                    $routeName !== null ? Text::create($routeName, SafeColor::LightGray) : null,
                 ];
             }
             else {
