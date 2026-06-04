@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4b5736bbfc09263faa5a3b2110301f1",
+    "content-hash": "816d051e4eb55e0e465384ca914d8f16",
     "packages": [
         {
             "name": "morphp/medas-console",
@@ -377,16 +377,16 @@
         },
         {
             "name": "morphp/medas-service-manager",
-            "version": "v3.4.2",
+            "version": "v3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tarantuli/medas-service-manager.git",
-                "reference": "309e7062fd9db6b5aeef95cbc03511ef9383db49"
+                "reference": "4357e99ffc6a0098ddc1df13b0a7e383de0419de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-service-manager/zipball/309e7062fd9db6b5aeef95cbc03511ef9383db49",
-                "reference": "309e7062fd9db6b5aeef95cbc03511ef9383db49",
+                "url": "https://api.github.com/repos/tarantuli/medas-service-manager/zipball/4357e99ffc6a0098ddc1df13b0a7e383de0419de",
+                "reference": "4357e99ffc6a0098ddc1df13b0a7e383de0419de",
                 "shasum": ""
             },
             "require": {
@@ -421,10 +421,10 @@
                 "services"
             ],
             "support": {
-                "source": "https://github.com/tarantuli/medas-service-manager/tree/v3.4.2",
+                "source": "https://github.com/tarantuli/medas-service-manager/tree/v3.4.3",
                 "issues": "https://github.com/tarantuli/medas-service-manager/issues"
             },
-            "time": "2026-05-21T08:35:24+00:00"
+            "time": "2026-06-03T14:47:54+00:00"
         },
         {
             "name": "myclabs/deep-copy",
