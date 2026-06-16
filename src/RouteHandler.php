@@ -7,8 +7,7 @@ namespace Medas\Routing;
 use Medas\Core\Interfaces\{
     HttpRequestHandler,
     HttpRequestHandlerDefersToMethod,
-    HttpRequestHandlerGeneratesEndpoint,
-    ParameterResolveManager
+    HttpRequestHandlerGeneratesEndpoint
 };
 
 class RouteHandler implements HttpRequestHandler, HttpRequestHandlerGeneratesEndpoint, HttpRequestHandlerDefersToMethod
@@ -157,8 +156,11 @@ class RouteHandler implements HttpRequestHandler, HttpRequestHandlerGeneratesEnd
         }
 
         $handler = $this->handler();
-        $arguments = service(ParameterResolveManager::class)
-            ->resolveMethodParameters(new \ReflectionFunction($handler), $arguments);
+
+        $arguments = medas()->objectInstantiator()->resolveMethodParameters(
+            new \ReflectionFunction($handler),
+            $arguments
+        );
 
         return $handler(...$arguments);
     }
