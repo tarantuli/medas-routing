@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Routing;
 
-use Medas\Core\Attributes\{ConfigValue, Service};
+use Medas\Core\{Attributes\ConfigValue, Attributes\Service, Events\AllowedAccess};
 
 #[Service]
 readonly class HandlerFinder
@@ -108,6 +108,12 @@ readonly class HandlerFinder
             $method->name,
             $priority
         );
+
+        $vote = dispatch(new AllowRoute($handler));
+
+        if ($vote->allowedAccess === AllowedAccess::Denied) {
+            return;
+        }
 
         $handlers[] = $handler;
     }
