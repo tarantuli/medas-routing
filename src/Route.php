@@ -15,6 +15,7 @@ class Route extends Service
     public function __construct(
         string|Parameters\Parameter|array $parameters = [],
         private readonly string|null      $endpointForEntity = null,
+        public readonly string|null       $endpointType = null,
     )
     {
         $this->parameters = is_array($parameters) ? $parameters : [$parameters];
