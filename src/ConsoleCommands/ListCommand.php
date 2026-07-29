@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Medas\Routing\ConsoleCommands;
 
 use Medas\Console\{
+    Commands\Argument,
     Commands\BaseConsoleCommand,
     Commands\CommandInput,
     Commands\ConsoleCommandGroup,
@@ -60,6 +61,13 @@ readonly class ListCommand extends BaseConsoleCommand
         ];
     }
 
+    public function arguments(): array
+    {
+        return [
+            Argument::optional('filter'),
+        ];
+    }
+
     public function process(CommandInput $input): void
     {
         $this->printer->print();
@@ -77,7 +85,8 @@ readonly class ListCommand extends BaseConsoleCommand
                     continue;
                 }
 
-                if ($input->hasArgument(0) && !strcasecmp($input->getArgument(0), $handler->endpointName())) {
+                if ($input->hasArgument('filter')
+                        && !strcasecmp($input->getArgument('filter'), $handler->endpointName())) {
                     continue;
                 }
 
